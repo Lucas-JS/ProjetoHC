@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar color="anhembiColor" hideBackButton>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <!-- Título -->
+      <ion-title *ngFor="let item of grupo|async" class="text">{{item.nome}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content padding class="planFundo">
+    <ion-grid col-12>
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <!-- Div para mostrar conteúdo do grupo -->
+            <div class="info">
+                <ion-row>
+                  <ion-col col-12>
+                    <br>
+                     <!-- Tabela de Horas do Grupo -->
+                     <ion-item *ngFor="let item of grupo|async">
+                        <div class="tabelaHoras">
+                          <ion-row justify-content-center>
+                              <p class="textTitle">Tabela de Horas</p>
+                          </ion-row>
+                          <ion-row justify-content-between>
+                              <ion-col col-xl-4 col-xs-12>
+                                <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
+                              </ion-col>
+                              <ion-col col-xl-4 col-xs-12>
+                                <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}</p>
+                              </ion-col>
+                              <ion-col col-xl-4 col-xs-12>
+                                <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
+                              </ion-col>
+                          </ion-row>
+                          </div>
+                      </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <!-- Conteúdo pai das tabelas-->
+                <ion-row>
+                  <ion-col col-12>
+                      <ion-item color="anhembiColor" *ngFor="let item of grupo|async">
+                        <p class="text" text-center>GRUPO - {{item.nome}}</p>
+                      </ion-item>
+                  </ion-col>
+
+                <!-- Tabela Cadastrado de Atividades -->
+                <ion-col col-xl-8>
+                  <ion-item color="anhembiColor">
+                    <ion-row justify-content-between>
+                        <p class="text">ATIVIDADES</p>
+                        <p class="text"> CH MÁXIMA</p>
+                    </ion-row>
+                  </ion-item>
+
+                <ion-list radio-group>
+                  <ion-item *ngFor= "let item of atividade|async">
+                     <ion-label>{{item.nome}}</ion-label>
+                     <ion-label text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
+                     <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
+                  </ion-item>
+                </ion-list>
+                </ion-col>
+
+                <!-- Tabela Histórico dos Certificados -->
+                <ion-col col-xl-4>
+                  <ion-item color="anhembiColor">
+                    <ion-row justify-content-center>
+                        <p class="tableAtiv">SITUAÇÃO CERTIFICADOS</p>
+                    </ion-row>
+                  </ion-item>
+                </ion-col>
+               </ion-row>
+                <!-- 4 Linha dentro da div principal -->
+                <ion-row justify-content-between>
+                  <ion-col col-xl-3 col-md-4 col-12>
+                    <input type="file" [disabled]="selected">
+                    <button ion-button color="anhembiColor" [disabled]="selected" (click)="cadCert()" full>CADASTRAR CERTIFICADO</button>
+                  </ion-col>
+                </ion-row>
+            </div>
+        </ion-col>
+       </ion-row>
+      </ion-grid>
+</ion-content>

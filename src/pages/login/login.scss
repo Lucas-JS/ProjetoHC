@@ -1,0 +1,27 @@
+page-login {
+  /*Div Login*/
+  div.login{
+  padding-top: 1cm;
+  padding-left: 1cm;
+  padding-right: 1cm;
+  height:100vh;
+  background-color:#01AB8E;
+  opacity: 0.9;
+  justify-content: end;
+  }
+
+  /*Botão Login*/
+  input.btn-outline-success{
+    font-weight: bold;
+  }
+
+  /*Estilo da Letra*/
+  p.texto{
+  color:#FFFFFF;
+  text-align: left;
+  padding-block-end: 1cm;
+ }
+
+
+
+}

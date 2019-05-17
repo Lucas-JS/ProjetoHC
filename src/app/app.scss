@@ -1,0 +1,131 @@
+ /*Div Informações Globais*/
+ div.info{
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color:	#F8F8F8;
+  border-radius: 10px;
+  opacity: 0.9;
+  }
+
+  /*Plano de Fundo*/
+ .planFundo{
+  background-image: url(../assets/back.jpg);
+  background-repeat: no-repeat;
+  background-size:cover;
+ }
+
+/*Plano de Fundo Login*/
+  .planFundoLogin{
+    background-image: url(../assets/login.png);
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+
+  /*Div do Histórico dos Certificados*/
+  div.historicoCertificado{
+    padding-top: 0.2cm;
+    padding-block-end: 0.2cm;
+    background-color:	#F8F8F8;
+  }
+
+  /*Plano de Fundo do ion-item usuário*/
+  .ionItemUsuario{
+    /*Cor Transparente*/
+    background-color: rgba(0, 0, 0, 0);
+  }
+  /*Design Tabela de Horas*/
+  .tabelaHoras{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #f4f4f4;
+    border: 4px solid #dcdcdc;
+    color: #fff;
+    border-radius: 10px;
+    border-color: #01AB8E;
+    padding-block-start: 2%;
+  }
+
+  /*Botão de histórico de certificados*/
+  .btnHistCertificadoHome{
+    text-align:center;
+}
+
+  /*Estilização do texto aluno*/
+  p.textTitle{
+    font-size:20px;
+    font-weight: bold;
+    color: #000000;
+    padding-block-end: 2%;
+  }
+
+  /*Estilização do nome do usuário*/
+  p.usuario{
+    font-size:18px;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  p.text{
+    font-size:16px;
+    font-weight: bold;
+  }
+
+  /*Estilização de Horas*/
+  p.textHoras{
+    font-size:16px;
+    font-weight: bold;
+    color:#01AB8E;
+  }
+
+  /*Estilo do Rodapé do Menu*/
+  p.rodape{
+  color:#FFFFFF;
+  text-align: left;
+  font-style: oblique;
+  }
+
+  /*Estilização de titulos*/
+  p.subTitulo{
+  color: #000000;
+  font-weight: bold;
+  font-size: 20px;
+  }
+
+  /*Estilização do texto aluno*/
+  p.textAluno{
+    font-size:16px;
+    font-weight: bold;
+  }
+
+  /*Estilização da Barra de Progresso*/
+  p.progressOuter{
+    font-size:14px;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  /*Estilização da fonte das atividades*/
+  p.tableAtiv{
+    font-size:12px;
+    font-weight: bold;
+  }
+
+  /*Estilização do texto da informação do cadastro de atividades*/
+  p.infoCadAtiv{
+    font-size:12px;
+    font-style: oblique;
+    font-weight: bold;
+  }
+
+  /*Estilização do icone do Aluno*/
+  .tamIcon{
+    font-size:5.0em;
+    color:#01AB8E;
+  }
+
+  /*Estilização do icone da Situação Certificado*/
+  .situacaoIcon{
+    font-size:3.0em;
+    text-align: end;
+  }

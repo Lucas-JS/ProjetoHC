@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color="anhembiColor" hideBackButton>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!-- Título -->
+    <ion-title>Minha Área</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="planFundo">
+  <ion-grid>
+    <!--div professor-->
+    <div class="info">
+    <ion-row justify-content-center>
+      <!--utiliza 12 linhas de colunas-->
+      <ion-col col-12>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+                <ion-icon name="person" color="anhembiColor" class="tamIcon"></ion-icon>
+            </ion-col>
+            <ion-col col-11>
+                <p class="titulo">Nome Professor</p>
+            </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+          <ion-grid>
+            <ion-row>
+                <ion-col col-4>
+                    <ion-item >
+                        <ion-label>SELECIONAR CAMPUS</ion-label>
+                        <ion-select>
+                            <ion-option value="PAULISTA 1">Paulista 1</ion-option>
+                            <ion-option value="PAULISTA 2">Paulista 2</ion-option>
+
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-4 float-rigth>
+                    <ion-item >
+                        <ion-label>SELECIONAR CURSO</ion-label>
+                        <ion-select>
+                            <ion-option value="CCO">Ciências da Computação</ion-option>
+                            <ion-option value="SI">Sistemas de Informação</ion-option>
+
+                        </ion-select>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-4>
+                    <button ion-button color="anhembiColor">Buscar</button>
+                    </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-col>
+      </ion-row>
+      </div>
+    </ion-grid>
+</ion-content>
