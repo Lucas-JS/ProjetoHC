@@ -1,10 +1,7 @@
 <ion-header>
   <ion-navbar color="anhembiColor" hideBackButton>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <!-- Título -->
-    <ion-title>Minha Área</ion-title>
+    <ion-title>Gerenciamento de Atividades Complementares</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -16,12 +13,12 @@
       <!--utiliza 12 linhas de colunas-->
       <ion-col col-12>
         <ion-grid>
-          <ion-row>
+          <ion-row *ngFor="let item of professor | async ">
             <ion-col col-1>
                 <ion-icon name="person" color="anhembiColor" class="tamIcon"></ion-icon>
             </ion-col>
             <ion-col col-11>
-                <p class="titulo">Nome Professor</p>
+                <p class="titulo">{{item.nome}}</p>
             </ion-col>
             </ion-row>
           </ion-grid>
