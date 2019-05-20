@@ -33,14 +33,14 @@
               <ion-col col-4>
                 <ion-item>
                   <ion-label>SELECIONAR CURSO</ion-label>
-                  <ion-select>
+                  <ion-select [(ngModel)]="selectCurso">
                     <ion-option value="CCO">Ciências da Computação</ion-option>
                     <ion-option value="SI">Sistemas de Informação</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
               <ion-col col-4>
-                <button ion-button color="anhembiColor">Buscar</button>
+                <button ion-button color="anhembiColor"(click)="busca()">Buscar</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -58,50 +58,36 @@
                     </ion-card-header>
               </ion-row>
               <ion-row style="border-bottom: groove;">
-                  <ion-col col-2>
-                  <ion-label >header</ion-label>
+                  <ion-col col-3>
+                  <ion-label >Aluno</ion-label>
                 </ion-col>
-                <ion-col col-2>
-                  <ion-label >header</ion-label>
+                <ion-col col-1>
+                  <ion-label >Ra</ion-label>
                 </ion-col>
                   <ion-col col-2>
-                  <ion-label >header</ion-label>
+                  <ion-label >Curso</ion-label>
+                </ion-col>
+                <ion-col col-1>
+                  <ion-label >Admissão</ion-label>
                 </ion-col>
               </ion-row>
-              <ion-row style="border-bottom: groove;">
-                  <ion-col col-2>
-                  <ion-label >row</ion-label>
+              <ion-item  *ngFor="let alunos of aluno | async ">
+                <ion-row style="border-bottom: groove;">
+                  <ion-col col-3>
+                  <p class="text">{{alunos.nome}}</p>
                 </ion-col>
-                <ion-col col-2>
-                  <ion-label >02/02/2018</ion-label>
-                </ion-col>
-                  <ion-col col-2>
-                  <ion-label >row</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row style="border-bottom: groove;">
-                  <ion-col col-2>
-                  <ion-label >row</ion-label>
-                </ion-col>
-                <ion-col col-2>
-                  <ion-label >02/02/2018</ion-label>
+                <ion-col col-1>
+                  <p class="text">{{alunos.ra}}</p>
                 </ion-col>
                   <ion-col col-2>
-                  <ion-label >row</ion-label>
+                  <p class="text">{{alunos.curso}}</p>
                 </ion-col>
-              </ion-row>
-              <ion-row >
-                  <ion-col col-2>
-                  <ion-label >row</ion-label>
-                </ion-col>
-                <ion-col col-2>
-                  <ion-label >02/02/2018</ion-label>
-                </ion-col>
-                  <ion-col col-2>
-                  <ion-label >row</ion-label>
+                <ion-col col-1>
+                  <p class="text">{{alunos.semestre}}</p>
                 </ion-col>
               </ion-row>
 
+              </ion-item>
             </ion-col>
 
       </ion-grid>

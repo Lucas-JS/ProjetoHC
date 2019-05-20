@@ -11,14 +11,20 @@ import { Observable } from 'rxjs/Observable';
 export class ProfessorPage{
   professor: Observable<any>;
   aluno: Observable<any>;
+
+  selectCurso: any;
   //firebaseService: any;
 
   constructor(public menuctrl:MenuController, public firebaseService:FirebaseProvider,public navCtrl: NavController, public navParams: NavParams) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
-    //this.aluno = navParams.get('ColAluno');
+    this.aluno = this.firebaseService.getAll();
+
+
   }
 
-
+  busca(){
+    console.log(this.selectCurso);
+  }
 
 }
