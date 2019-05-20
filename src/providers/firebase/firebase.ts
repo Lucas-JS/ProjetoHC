@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, snapshotChanges } from "angularfire2/database";
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
+import { c } from '@angular/core/src/render3';
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class FirebaseProvider {
   }
 
   getAll(){
-   return this.db.list(this.PATH, ref => ref.orderByChild('nome').equalTo('nome2'))
+   return this.db.list(this.PATH, ref => ref.orderByChild('nome'))
     .snapshotChanges()
     .map(changes =>{
         return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
@@ -46,6 +47,15 @@ export class FirebaseProvider {
     }
 
   }
+
+  //  busca alunos no grupo TESTE
+  /*getAluno(aluno){
+    return this.db.list(this.PATH, ref => ref.orderByChild('nome').equalTo(aluno))
+    .snapshotChanges()
+    .map(changes => {
+      return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
+    })
+  }*/
 
   //Busca Grupo Especifico No Banco
   getGrupo(grupo){
