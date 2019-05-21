@@ -40,7 +40,7 @@
                 </ion-item>
               </ion-col>
               <ion-col col-4>
-                <button ion-button color="anhembiColor"(click)="busca()">Buscar</button>
+                <button ion-button color="anhembiColor" (click)="buscaAlunoCurso()">Buscar</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -50,48 +50,46 @@
     </div>
   </ion-grid>
   <div class='info'>
-      <ion-grid>
-          <ion-col col-8>
-              <ion-row>
-                  <ion-card-header class="bar-stable">
-                      <h1 class="title">Listagem de alunos</h1>
-                    </ion-card-header>
-              </ion-row>
-              <ion-row style="border-bottom: groove;">
-                  <ion-col col-3>
-                  <ion-label >Aluno</ion-label>
-                </ion-col>
-                <ion-col col-1>
-                  <ion-label >Ra</ion-label>
-                </ion-col>
-                  <ion-col col-2>
-                  <ion-label >Curso</ion-label>
-                </ion-col>
-                <ion-col col-1>
-                  <ion-label >Admissão</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-item  *ngFor="let alunos of aluno | async ">
-                <ion-row style="border-bottom: groove;">
-                  <ion-col col-3>
-                  <p class="text">{{alunos.nome}}</p>
-                </ion-col>
-                <ion-col col-1>
-                  <p class="text">{{alunos.ra}}</p>
-                </ion-col>
-                  <ion-col col-2>
-                  <p class="text">{{alunos.curso}}</p>
-                </ion-col>
-                <ion-col col-1>
-                  <p class="text">{{alunos.semestre}}</p>
-                </ion-col>
-              </ion-row>
-
-              </ion-item>
+    <ion-grid>
+      <ion-col col-8>
+        <ion-row>
+          <ion-card-header class="bar-stable">
+            <h1 class="title">Listagem de alunos</h1>
+          </ion-card-header>
+        </ion-row>
+        <ion-row style="border-bottom: groove;">
+          <ion-col col-3>
+            <ion-label>Aluno</ion-label>
+          </ion-col>
+          <ion-col col-1>
+            <ion-label>Ra</ion-label>
+          </ion-col>
+          <ion-col col-2>
+            <ion-label>Curso</ion-label>
+          </ion-col>
+          <ion-col col-1>
+            <ion-label>Admissão</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-item *ngFor="let alunos of aluno | async ">
+          <ion-row style="border-bottom: groove;">
+            <ion-col col-3>
+              <p class="text">{{alunos.nome}}</p>
             </ion-col>
+            <ion-col col-1>
+              <p class="text">{{alunos.ra}}</p>
+            </ion-col>
+            <ion-col col-2>
+              <p class="text">{{alunos.curso}}</p>
+            </ion-col>
+            <ion-col col-1>
+              <p class="text">{{alunos.semestre}}</p>
+            </ion-col>
+          </ion-row>
 
-      </ion-grid>
+        </ion-item>
+      </ion-col>
+
+    </ion-grid>
   </div>
 </ion-content>
-
-

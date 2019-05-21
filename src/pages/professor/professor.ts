@@ -1,5 +1,5 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
-import {  AfterViewInit ,Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
@@ -7,24 +7,40 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'page-professor',
   templateUrl: 'professor.html',
+  providers: [
+    FirebaseProvider
+  ]
 })
-export class ProfessorPage{
+export class ProfessorPage {
   professor: Observable<any>;
   aluno: Observable<any>;
-
   selectCurso: any;
-  //firebaseService: any;
 
-  constructor(public menuctrl:MenuController, public firebaseService:FirebaseProvider,public navCtrl: NavController, public navParams: NavParams) {
+
+
+  constructor(
+    public menuctrl: MenuController,
+    public firebaseService: FirebaseProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
-    this.aluno = this.firebaseService.getAll();
 
+    //this.aluno = this.firebaseService.getAll();
 
   }
 
-  busca(){
-    console.log(this.selectCurso);
+  buscaAlunoCurso(curso: string): void {
+    curso = this.selectCurso;
+    //console.log(curso);
+    if (curso == 'CCO') {
+      this.aluno = this.firebaseService.getAlunoCCO();
+    } else {
+      this.aluno = this.firebaseService.getAlunoSI();
+    }
   }
+
+
 
 }
