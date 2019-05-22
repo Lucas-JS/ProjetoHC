@@ -30,20 +30,14 @@ export class FirebaseProvider {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       })
   }
- getAlunoSI() {
-    return this.db.list(this.PATH, ref => ref.orderByChild('curso').equalTo('SI'))
+ getAlunoCurso(curso) {
+    return this.db.list(this.PATH, ref => ref.orderByChild('curso').equalTo(curso))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       })
   }
-  getAlunoCCO() {
-    return this.db.list(this.PATH, ref => ref.orderByChild('curso').equalTo('CCO'))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
-  }
+
 
 
   getLogin(userEmail, tipo) {

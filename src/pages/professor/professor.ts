@@ -33,12 +33,8 @@ export class ProfessorPage {
 
   buscaAlunoCurso(curso: string): void {
     curso = this.selectCurso;
-    //console.log(curso);
-    if (curso == 'CCO') {
-      this.aluno = this.firebaseService.getAlunoCCO();
-    } else {
-      this.aluno = this.firebaseService.getAlunoSI();
-    }
+    this.aluno = this.firebaseService.getAlunoCurso(curso);
+
   }
 
 
