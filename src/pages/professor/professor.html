@@ -53,11 +53,13 @@
     <ion-grid>
       <ion-row>
         <ion-col col-8>
-          <ion-row>
-            <ion-card-header class="bar-stable">
-              <h1 class="title">Listagem de alunos</h1>
-            </ion-card-header>
-          </ion-row>
+
+          <ion-item color="anhembiColor">
+            <ion-row>
+              <p class="text">Listagem de Alunos</p>
+            </ion-row>
+          </ion-item>
+
           <ion-row style="border-bottom: groove;">
             <ion-col col-3>
               <ion-label>Aluno</ion-label>
@@ -72,8 +74,9 @@
               <ion-label>Admissão</ion-label>
             </ion-col>
           </ion-row>
-          <ion-item *ngFor="let alunos of aluno | async ">
-            <ion-row style="border-bottom: groove;">
+
+          <ion-list *ngFor="let alunos of aluno | async ">
+            <ion-row  style="border-bottom: groove;">
               <ion-col col-3>
                 <p class="text">{{alunos.nome}}</p>
               </ion-col>
@@ -87,16 +90,15 @@
                 <p class="text">{{alunos.semestre}}</p>
               </ion-col>
             </ion-row>
-
-          </ion-item>
+          </ion-list>
         </ion-col>
 
         <ion-col col-4>
-          <ion-row>
-            <ion-card-header class="bar-stable">
-              <h1 class="title">Listagem de certificados</h1>
-            </ion-card-header>
-          </ion-row>
+          <ion-item color="anhembiColor">
+            <ion-row>
+              <p class="text">Listagem de Certificados </p>
+            </ion-row>
+          </ion-item>
         </ion-col>
       </ion-row>
 
