@@ -2,9 +2,6 @@ import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component, AfterViewInit, TestabilityRegistry} from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Aluno } from '../../models/aluno.model';
-
-
 
 @IonicPage()
 @Component({

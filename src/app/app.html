@@ -1,5 +1,5 @@
  <!-- Menu Aluno -->
-<ion-menu [content]="content" id="menuAluno" persistent="true" enabled="true">
+ <ion-menu [content]="content" id="menuAluno" persistent="true" enabled="true">
   <ion-header>
     <ion-toolbar color="anhembiColor">
       <!-- Logo -->
@@ -8,11 +8,13 @@
   </ion-header>
 
   <ion-content>
+    <!-- Menu Browser-->
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <p class="text">{{p.title}}</p>
       </button>
     </ion-list>
+
   </ion-content>
 
   <!-- Rodapé do Menu -->
@@ -26,36 +28,6 @@
       </ion-grid>
     </ion-toolbar>
   </ion-footer>
-</ion-menu>
-
-<!-- Menu Professor -->
-<ion-menu [content]="content" id="menuProfessor" enabled="false" persistent="true">
-    <ion-header>
-        <ion-toolbar color="anhembiColor">
-          <!-- Logo -->
-          <img src="../assets/logo.png"/>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content>
-        <ion-list>
-          <ion-item>1</ion-item>
-          <ion-item>2</ion-item>
-          <ion-item>3</ion-item>
-        </ion-list>
-      </ion-content>
-
-      <!-- Rodapé do Menu -->
-      <ion-footer>
-        <ion-toolbar color="anhembiColor">
-          <ion-grid>
-              <ion-row>
-                <!-- Descrição Laureate -->
-                <p class="rodape">© Laureate Education, Inc.</p>
-              </ion-row>
-          </ion-grid>
-        </ion-toolbar>
-      </ion-footer>
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

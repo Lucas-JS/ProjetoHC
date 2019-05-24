@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AlunoPage } from './../pages/aluno/aluno';
 import { LoginPage } from './../pages/login/login';
 import { GrupoPage } from '../pages/grupo/grupo';
+import { p } from '@angular/core/src/render3';
 
 
 @Component({
@@ -13,18 +14,19 @@ import { GrupoPage } from '../pages/grupo/grupo';
 export class MyApp{
   //Recuperar o componente
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any = LoginPage;
+
+  opcao: boolean;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public plataforma: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
     this.alunoMenu();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.plataforma.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
@@ -53,4 +55,17 @@ export class MyApp{
   logout(){
   this.nav.setRoot('LoginPage');
   }
+
+  verPlataforma(){
+    if(this.plataforma.is("ios")){
+      console.log("mobile");
+      return true;
+    }if(this.plataforma.is("android")){
+      console.log("mobile");
+      return true;
+    }
+      console.log("browser");
+      return false;
+  }
+
 }
