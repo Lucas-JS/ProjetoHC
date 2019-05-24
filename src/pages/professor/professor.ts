@@ -2,6 +2,7 @@ import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { AfterViewInit, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams/*, MenuController */} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -35,6 +36,10 @@ export class ProfessorPage {
     curso = this.selectCurso;
     this.aluno = this.firebaseService.getAlunoCurso(curso);
 
+  }
+
+  logoutProf(): void{
+    this.navCtrl.push(LoginPage);
   }
 
 

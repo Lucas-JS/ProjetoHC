@@ -1,5 +1,10 @@
 <ion-header>
-  <ion-navbar color="anhembiColor" hideBackButton>
+  <ion-navbar color="anhembiColor" hideBackButton >
+      <ion-buttons end>
+          <button ion-button icon-only (click)="logoutProf()">
+              <ion-icon name="power"></ion-icon>
+          </button>
+      </ion-buttons>
     <!-- Título -->
     <ion-title text-center>Gerenciamento de Atividades Complementares</ion-title>
   </ion-navbar>
