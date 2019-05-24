@@ -1,6 +1,6 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { AfterViewInit, Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams/*, MenuController */} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
