@@ -19,7 +19,7 @@ export class ProfessorPage {
 
 
   constructor(
-    public menuctrl: MenuController,
+    //public menuctrl: MenuController,
     public firebaseService: FirebaseProvider,
     public navCtrl: NavController,
     public navParams: NavParams
