@@ -56,6 +56,16 @@ export class FirebaseProvider {
 
   }
 
+  // busca certificado pelo ra do aluno
+  getCertificadoAluno(ra) {
+    return this.db.list(this.PATH4, ref => ref.orderByChild('ra').equalTo(ra))
+      .snapshotChanges()
+      .map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+  }
+
+
   //Busca Aluno Pelo Curso
   getAlunoCurso(curso) {
     return this.db.list(this.PATH, ref => ref.orderByChild('curso').equalTo(curso))

@@ -1,5 +1,5 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams/*, MenuController */} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { LoginPage } from '../login/login';
@@ -16,8 +16,8 @@ export class ProfessorPage {
   professor: Observable<any>;
   aluno: Observable<any>;
   selectCurso: any;
-
-
+  curso: any;
+  certificado: Observable<any>;
 
   constructor(
     //public menuctrl: MenuController,
@@ -27,8 +27,6 @@ export class ProfessorPage {
   ) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
-
-    //this.aluno = this.firebaseService.getAll();
 
   }
 
@@ -40,6 +38,11 @@ export class ProfessorPage {
 
   logoutProf(): void{
     this.navCtrl.push(LoginPage);
+  }
+
+  mostraRa(ra:string): void{
+
+    this.certificado = this.firebaseService.getCertificadoAluno(ra);
   }
 
 
