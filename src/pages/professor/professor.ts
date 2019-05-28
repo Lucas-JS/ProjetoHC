@@ -19,6 +19,8 @@ export class ProfessorPage {
   curso: any;
   certificado: Observable<any>;
 
+
+
   constructor(
     //public menuctrl: MenuController,
     public firebaseService: FirebaseProvider,
@@ -28,7 +30,11 @@ export class ProfessorPage {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
 
+
+
   }
+
+
 
   buscaAlunoCurso(curso: string): void {
     curso = this.selectCurso;
@@ -40,7 +46,7 @@ export class ProfessorPage {
     this.navCtrl.push(LoginPage);
   }
 
-  mostraRa(ra:string): void{
+  getRa(ra:string): void{
 
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
   }

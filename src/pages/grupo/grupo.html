@@ -3,8 +3,10 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <!-- Título -->
-      <ion-title *ngFor="let item of grupo|async" class="text">{{item.nome}}</ion-title>
+      <!-- Título do Grupo-->
+      <p class="titleMobile" *ngFor="let item of grupo|async" showWhen="android,ios" text-initial>{{item.nome}}</p>
+      <p class="title" *ngFor="let item of grupo|async" showWhen="landscape">{{item.nome}}</p>
+
     </ion-navbar>
   </ion-header>
 
@@ -41,14 +43,8 @@
 
                 <!-- Conteúdo pai das tabelas-->
                 <ion-row>
-                  <ion-col col-12>
-                      <ion-item color="anhembiColor" *ngFor="let item of grupo|async">
-                        <p class="text" text-center>GRUPO - {{item.nome}}</p>
-                      </ion-item>
-                  </ion-col>
-
                 <!-- Tabela Cadastrado de Atividades -->
-                <ion-col col-xl-8>
+                <ion-col col-xl-8 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-between>
                         <p class="text">ATIVIDADES</p>
@@ -56,30 +52,41 @@
                     </ion-row>
                   </ion-item>
 
+
                 <ion-list radio-group>
                   <ion-item *ngFor= "let item of atividade|async">
-                     <ion-label>{{item.nome}}</ion-label>
-                     <ion-label text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
-                     <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
+                      <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
+                      <ion-label class="text" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
+                      <ion-label class="text" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
+                      <ion-label showWhen="android,ios">
+                          <ion-row>
+                          <ion-col col-10 text-wrap>
+                           <p class="textMobile" text-initial>{{item.nome}}</p>
+                          </ion-col>
+                          <ion-col col-2>
+                           <p class="textMobile"text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</p>
+                          </ion-col>
+                         </ion-row>
+                      </ion-label>
                   </ion-item>
                 </ion-list>
                 </ion-col>
 
                 <!-- Tabela Histórico dos Certificados -->
-                <ion-col col-xl-4>
+                <ion-col col-xl-4 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-center>
                         <p class="tableAtiv">SITUAÇÃO CERTIFICADOS</p>
-                        <ion-item button (click)="openPDF()" full></ion-item>
+                        <ion-item button (click)="baixarArquivo()" full></ion-item>
                     </ion-row>
                   </ion-item>
                 </ion-col>
                </ion-row>
                 <!-- 4 Linha dentro da div principal -->
                 <ion-row justify-content-between>
-                  <ion-col col-xl-3 col-md-4 col-12>
-                    <input type="file" [disabled]="selected">
-                    <button ion-button color="anhembiColor" [disabled]="selected" (click)="cadCert()" full>CADASTRAR CERTIFICADO</button>
+                  <ion-col col-xl-3 col-md-4 col-12 *ngFor="let item of grupo|async">
+                    <input type="file" (change)="atualizaArquivo($event)" [disabled]="selected">
+                    <button ion-button color="anhembiColor" [disabled]="selected" (click)="enviarArquivo(item.nome)" full>CADASTRAR CERTIFICADO</button>
                   </ion-col>
                 </ion-row>
             </div>
