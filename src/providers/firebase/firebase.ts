@@ -119,17 +119,17 @@ export class FirebaseProvider {
 
   // TESTE DE INSERCAO E ATUALIZACAO DE CERTIFICADO
 
-  saveCert(certificado: any){
+  saveCert(certificado: any) {
     return new Promise((resolve, reject) => {
-      if(certificado.key){
+      if (certificado.key) {
         // atualizando pela lista
         this.db.list(this.PATH4)
-          .update(certificado.key, {categoria: certificado.categoria, ra: certificado.ra, url: certificado.url})
+          .update(certificado.key, { categoria: certificado.categoria, ra: certificado.ra, url: certificado.url })
           .then(() => resolve())
           .catch((e) => reject(e));
-      }else {
+      } else {
         this.db.list(this.PATH4)
-          .push( {categoria: certificado.categoria, ra: certificado.ra, url: certificado.url})
+          .push({ categoria: certificado.categoria, ra: certificado.ra, url: certificado.url })
           .then(() => resolve());
       }
     })
