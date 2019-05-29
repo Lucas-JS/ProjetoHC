@@ -78,7 +78,7 @@
                 </ion-row>-->
 
             <ion-list>
-              <ion-row style="border-bottom: groove;" *ngFor="let alunos of aluno | async " (click)="getRa(alunos.ra)">
+              <ion-row style="border-bottom: groove;" *ngFor="let alunos of aluno | async " (click)="getCertificado(alunos.ra)">
                 <ion-col col-lg-8>
                   <p class="text">{{alunos.nome}}</p>
                 </ion-col>

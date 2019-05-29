@@ -1,6 +1,6 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams/*, MenuController */} from 'ionic-angular';
+import { IonicPage, NavController, NavParams/*, MenuController */ } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { LoginPage } from '../login/login';
 
@@ -17,7 +17,7 @@ export class ProfessorPage {
   aluno: Observable<any>;
   selectCurso: any;
   curso: any;
-  certificado: Observable<any>;
+  certificado: any;
 
 
 
@@ -42,13 +42,14 @@ export class ProfessorPage {
 
   }
 
-  logoutProf(): void{
+  logoutProf(): void {
     this.navCtrl.push(LoginPage);
   }
 
-  getRa(ra:string): void{
+  getCertificado(ra: string): void {
 
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
+    //console.log(ra);
   }
 
 

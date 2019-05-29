@@ -56,7 +56,7 @@
                 <ion-list radio-group>
                   <ion-item *ngFor= "let item of atividade|async">
                       <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
-                      <ion-label class="text" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
+                      <ion-label class="text" showWhen="landscape" text-initial >{{item.nome}}</ion-label>
                       <ion-label class="text" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
                       <ion-label showWhen="android,ios">
                           <ion-row>

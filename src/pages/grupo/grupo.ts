@@ -1,3 +1,4 @@
+import { AlunoPage } from './../aluno/aluno';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
@@ -8,6 +9,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 
 import { FirebaseApp } from 'angularfire2';
+
 
 
 
@@ -27,6 +29,7 @@ export class GrupoPage {
 
   files: Observable<any>;
 
+
   //Mostrar O Avanço da Barra de Progresso
   uploadProgress:Number=70;
 
@@ -38,8 +41,16 @@ export class GrupoPage {
     this.atividade = this.firebaseService.getAtividade(navParams.get('opcao'));
     //Cria referência no Firebase Storage
     this.referencia = fb.storage().ref();
+    // pegar dados do aluno
+
+
   }
 
+
+  exibeRa(raAluno){
+
+    console.log(raAluno);
+  }
   mudaCor(){
     this.selected=false;
     return this.cor = "anhembiColor";
@@ -50,17 +61,31 @@ export class GrupoPage {
     this.arquivo = event.srcElement.files[0];
   }
 
-  enviarArquivo(dir:string, arquivo){
+  enviarArquivo(dir:string, arquivo:string){
     //Direciona a referência pela qual o arquivo vai percorrer no Firebase Storage
-    let caminho = this.referencia.child(dir+'/'+this.arquivo.name);
+    arquivo = this.arquivo.name;
+    let caminho = this.referencia.child(/*dir*/'certificados'/*+'/'+this.arquivo.name*/);
     //Cria uma variante para o arquivo selecionado
-    let tarefa = caminho.put(this.arquivo);
+    let tarefa = caminho.child(arquivo).put(this.arquivo);
     tarefa.on('state_changed', (snapshot)=>{
        // Acompanha os estados do upload (progresso, pausado,...)
+       console.log('snapshot', snapshot);
     }, error => {
        // Tratar possíveis erros
     }, () => {
        // Função de retorno quando o upload estiver completo
+       caminho.child(arquivo).getDownloadURL().then(url => {
+        //console.log('string para download', url);
+        let raAluno:number = 20881195; //MacGyver approves
+        let certificado = {
+          categoria: dir,
+          ra: raAluno,
+          url: url
+        }
+        this.firebaseService.saveCert(certificado);
+
+       });
+
     });
 
     const toast = this.msgToastController.create({
@@ -81,3 +106,13 @@ export class GrupoPage {
 
 
 }
+/*
+tarefa.child(this.arquivo).getDownloadURL().then(url => {
+        console.log('string para download', url);
+       });
+
+
+       this.arquivo.getDownloadURL().then(url => {
+        console.log(url); // AQUI VOCÊ JÁ TEM O ARQUIVO
+     });
+*/
