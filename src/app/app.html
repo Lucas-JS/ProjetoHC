@@ -7,15 +7,21 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content >
+    <!-- Menu Mobile-->
+    <ion-list showWhen="android,ios">
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <p class="menuMobile">{{p.title}}</p>
+      </button>
+    </ion-list>
+
     <!-- Menu Browser-->
-    <ion-list>
+    <ion-list showWhen="landscape">
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <p class="text">{{p.title}}</p>
       </button>
     </ion-list>
-
-  </ion-content>
+</ion-content>
 
   <!-- Rodapé do Menu -->
   <ion-footer>

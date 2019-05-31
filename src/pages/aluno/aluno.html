@@ -9,18 +9,18 @@
 </ion-header>
 
 <ion-content padding class="planFundo">
-  <ion-grid>
-    <ion-row justify-content-center>
-      <!-- Utiliza 12 Linhas de Colunas -->
-      <ion-col col-12>
-        <!-- Div Aluno -->
+<ion-grid>
+  <ion-row justify-content-center>
+    <!-- Utiliza 12 Linhas de Colunas -->
+    <ion-col col-12>
+      <!-- Div Aluno -->
         <div class="info">
           <ion-grid>
             <ion-row *ngFor="let item of aluno|async" justify-content-center>
               <ion-col col-xl-3 col-sm-12>
                 <ion-item class="ionItemUsuario" text-center>
-                  <ion-icon name="person" color="black" class="tamIcon"></ion-icon>
-                  <p class="usuario">{{item.nome}}</p>
+                    <ion-icon name="person" color="black" class="tamIcon"></ion-icon>
+                    <p class="usuario">{{item.nome}}</p>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -28,8 +28,8 @@
             <ion-row>
               <ion-col col-xl-6 col-sm-12>
                 <ion-item *ngFor="let item of aluno|async">
-                  <p class="subTitulo">Registro Acadêmico</p>
-                  {{item.ra}}
+                    <p class="subTitulo">Registro Acadêmico</p>
+                    {{item.ra}}
                 </ion-item>
               </ion-col>
 
@@ -55,45 +55,51 @@
 
             <ion-row>
               <ion-col col-12>
-                <ion-item *ngFor="let item of aluno|async">
-                  <div class="tabelaHoras">
-                    <ion-row justify-content-center>
-                      <p class="textTitle">Tabela de Horas</p>
-                    </ion-row>
-                    <ion-row justify-content-between>
-                      <ion-col col-xl-4 col-xs-12>
-                        <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
-                      </ion-col>
-                      <ion-col col-xl-4 col-xs-12>
-                        <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}
-                        </p>
-                      </ion-col>
-                      <ion-col col-xl-4 col-xs-12>
-                        <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
-                      </ion-col>
-                    </ion-row>
-                  </div>
-                </ion-item>
+                  <ion-item *ngFor="let item of aluno|async">
+                    <div class="tabelaHoras">
+                      <ion-row justify-content-center>
+                          <p class="textTitle">Tabela de Horas</p>
+                      </ion-row>
+                      <ion-row justify-content-between>
+                          <ion-col col-xl-4 col-xs-12>
+                            <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
+                          </ion-col>
+                          <ion-col col-xl-4 col-xs-12>
+                            <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}</p>
+                          </ion-col>
+                          <ion-col col-xl-4 col-xs-12>
+                            <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
+                          </ion-col>
+                      </ion-row>
+                      </div>
+                  </ion-item>
               </ion-col>
             </ion-row>
 
-            <ion-row justify-content-start>
-              <ion-col col-12>
-                <!-- Div Informações de Cadastro dos Certificados -->
-                <div class="infoCadAtiv">
-                  <p class="infoCadAtiv">Prezado(a) Estudante,</p>
-                  <p class="infoCadAtiv">a) Atente-se ao cadastro das atividades complementares
-                    dividindo-as como INSTITUCIONAIS ou como AREA / CURSO, conforme regulamento do seu curso,
-                    para evitar indeferimentos pelo docente aprovador.</p>
-                  <p class="infoCadAtiv">b) Caso seja identificada fraude/duplicidade na documentação apresentada
-                    como comprovante das horas / atividades, as mesmas poderão ser canceladas a qualquer tempo e
-                    sem aviso prévio.</p>
-                </div>
-              </ion-col>
+            <ion-row justify-content-between>
+              <ion-col col-lg-3>
+                  <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fregulamento.pdf?alt=media&token=e2bbcab6-c976-4ac7-9b32-04ffa7667cf5" target="blank" class="text">Regulamento</a>
+                  <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fmanual.pdf?alt=media&token=c7da9e9e-4184-43ff-a80f-87a49736b9e9" target="blank" class="text">Manual</a>
+                </ion-col>
             </ion-row>
+
+            <ion-row justify-content-start>
+                <ion-col col-12>
+                    <!-- Div Informações de Cadastro dos Certificados -->
+                    <div class="infoCadAtiv">
+                      <p class="infoCadAtiv">Prezado(a) Estudante,</p>
+                      <p class="infoCadAtiv">a) Atente-se ao cadastro das atividades complementares
+                      dividindo-as como INSTITUCIONAIS ou como AREA / CURSO, conforme regulamento do seu curso,
+                      para evitar indeferimentos pelo docente aprovador.</p>
+                      <p class="infoCadAtiv">b) Caso seja identificada fraude/duplicidade na documentação apresentada
+                      como comprovante das horas / atividades, as mesmas poderão ser canceladas a qualquer tempo e
+                      sem aviso prévio.</p>
+                    </div>
+                </ion-col>
+             </ion-row>
           </ion-grid>
         </div>
-      </ion-col>
-    </ion-row>
+    </ion-col>
+   </ion-row>
   </ion-grid>
 </ion-content>

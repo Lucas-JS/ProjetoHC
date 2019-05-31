@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AlunoPage } from './../pages/aluno/aluno';
 import { LoginPage } from './../pages/login/login';
 import { GrupoPage } from '../pages/grupo/grupo';
-import { p } from '@angular/core/src/render3';
 
 
 @Component({
@@ -55,17 +54,4 @@ export class MyApp{
   logout(){
   this.nav.setRoot('LoginPage');
   }
-
-  verPlataforma(){
-    if(this.plataforma.is("ios")){
-      console.log("mobile");
-      return true;
-    }if(this.plataforma.is("android")){
-      console.log("mobile");
-      return true;
-    }
-      console.log("browser");
-      return false;
-  }
-
 }

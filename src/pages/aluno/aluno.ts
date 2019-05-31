@@ -1,6 +1,6 @@
-import { FirebaseProvider } from './../../providers/firebase/firebase';
-import { Component, AfterViewInit, TestabilityRegistry } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, Item } from 'ionic-angular';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { Component, AfterViewInit, TestabilityRegistry} from '@angular/core';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
@@ -8,24 +8,14 @@ import { Observable } from 'rxjs/Observable';
   selector: 'page-aluno',
   templateUrl: 'aluno.html',
 })
-export class AlunoPage implements AfterViewInit {
+export class AlunoPage{
   //Objeto que escuta os dados no banco
-  aluno: Observable<any>
+  aluno:Observable<any>;
   //Barra de Progresso
   uploadProgress;
 
-
-  constructor(public menuctrl: MenuController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public menuctrl:MenuController,public navCtrl: NavController, public navParams: NavParams, public docs:DocumentViewer) {
     //Captura os dados do login para manipular no FormAluno
     this.aluno = navParams.get('ColAluno');
-
   }
-
-  //raAlunoLogado = this.aluno.get('ra');
-
-  ngAfterViewInit() {
-    this.menuctrl.toggle('menuAluno');
-
-  }
-
 }

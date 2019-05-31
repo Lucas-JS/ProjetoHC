@@ -1,16 +1,12 @@
-import { AlunoPage } from './../aluno/aluno';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
+import { File } from '@ionic-native/file';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 
 import { FirebaseApp } from 'angularfire2';
-
-
 
 
 @IonicPage()
@@ -21,42 +17,38 @@ import { FirebaseApp } from 'angularfire2';
 export class GrupoPage {
   grupo: Observable<any>;
   atividade: Observable<any>;
-  public cor: string;
+  public cor:string;
   selected: boolean = true;
 
   referencia;
   arquivo;
 
+  certificado: any;
+
   files: Observable<any>;
 
-
   //Mostrar O Avanço da Barra de Progresso
-  uploadProgress: Number = 70;
+  uploadProgress:Number=70;
 
-  constructor(public firebaseService: FirebaseProvider, public navCtrl: NavController,
-    public navParams: NavParams, private document: DocumentViewer, private file: File,
-    private transfer: FileTransfer, private platform: Platform, @Inject(FirebaseApp) fb: any, public msgToastController: ToastController) {
+  constructor(public firebaseService:FirebaseProvider,public navCtrl: NavController,
+    public navParams: NavParams, private document:DocumentViewer, private file:File,
+    private platform:Platform, @Inject(FirebaseApp) fb: any, public msgToastController:ToastController) {
+
     //Captura a opção selecionada e seleciona o grupo e atividades
     this.grupo = this.firebaseService.getGrupo(navParams.get('opcao'));
     this.atividade = this.firebaseService.getAtividade(navParams.get('opcao'));
     //Cria referência no Firebase Storage
     this.referencia = fb.storage().ref();
-    // pegar dados do aluno
 
-
+    this.getCertificado(20881190);
   }
 
-
-  exibeRa(raAluno) {
-
-    console.log(raAluno);
-  }
-  mudaCor() {
-    this.selected = false;
+  mudaCor(){
+    this.selected=false;
     return this.cor = "anhembiColor";
   }
 
-  atualizaArquivo(event) {
+  atualizaArquivo(event):void{
     //Atualiza informação de acordo com a opção selecionada em tempo real
     this.arquivo = event.srcElement.files[0];
   }
@@ -96,15 +88,23 @@ export class GrupoPage {
       duration: 5000
     })
     toast.present();
+ }
+
+  baixarArquivo(nome: string){
+ //  nome = 'testeatividades.pdf';
+  // let caminho = this.referencia.child('Atividades Fora da Universidade/'+nome);
+  // caminho.getDownloadURL().then(url => {
+   //});
+
+   this.document.viewDocument('https://expoforest.com.br/wp-content/uploads/2017/05/exemplo.pdf','application/pdf',{});
   }
 
-  baixarArquivo(nome: string) {
-    nome = 'atividades.pdf';
-    let caminho = this.referencia.child('dir/' + nome);
-    caminho.getDownloadURL().then(url => {
-      console.log(url); // AQUI VOCÊ JÁ TEM O ARQUIVO
-    });
+  getCertificado(ra): void {
+    this.certificado = this.firebaseService.getCertificadoAluno(ra);
+    this.certificado.subscribe(arg => console.log(arg));
   }
 
+  openPDF(){
 
+  }
 }

@@ -56,7 +56,7 @@
                 <ion-list radio-group>
                   <ion-item *ngFor= "let item of atividade|async">
                       <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
-                      <ion-label class="text" showWhen="landscape" text-initial >{{item.nome}}</ion-label>
+                      <ion-label class="text" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
                       <ion-label class="text" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
                       <ion-label showWhen="android,ios">
                           <ion-row>
@@ -76,9 +76,13 @@
                 <ion-col col-xl-4 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-center>
-                        <p class="tableAtiv">SITUAÇÃO CERTIFICADOS</p>
-                        <ion-item button (click)="baixarArquivo()" full></ion-item>
+                        <p class="text">SITUAÇÃO CERTIFICADOS </p>
                     </ion-row>
+                  </ion-item>
+
+                  <ion-item *ngFor="let certificados of certificado|async" text-center>
+                    <a href="{{certificados.url}}" target="blank">Visualizar</a>
+                    <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
                   </ion-item>
                 </ion-col>
                </ion-row>
