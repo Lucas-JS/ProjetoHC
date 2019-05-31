@@ -56,7 +56,7 @@ export class GrupoPage {
   enviarArquivo(dir: string, arquivo: string) {
     //Direciona a referência pela qual o arquivo vai percorrer no Firebase Storage
     arquivo = this.arquivo.name;
-    let caminho = this.referencia.child(/*dir*/'certificados'/*+'/'+this.arquivo.name*/);
+    let caminho = this.referencia.child('certificados');
     //Cria uma variante para o arquivo selecionado
     let tarefa = caminho.child(arquivo).put(this.arquivo);
     tarefa.on('state_changed', (snapshot) => {
@@ -69,9 +69,13 @@ export class GrupoPage {
       caminho.child(arquivo).getDownloadURL().then(url => {
         //console.log('string para download', url);
         let raAluno: number = 20881195; //MacGyver approves
+        let statusIni: string = "pendente";
+        let horasIni: number = 0;
         // cria objeto certificado para enviar pra coleção
         let certificado = {
           categoria: dir,
+          status: statusIni,
+          horas: horasIni,
           ra: raAluno,
           url: url
         }

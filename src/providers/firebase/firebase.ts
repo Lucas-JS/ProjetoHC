@@ -129,7 +129,7 @@ export class FirebaseProvider {
             .catch((e) => reject(e));
         } else {
           this.db.list(this.PATH4)
-            .push({ categoria: certificado.categoria, ra: certificado.ra, url: certificado.url })
+            .push({ categoria: certificado.categoria, status: certificado.status,horas: certificado.horas, ra: certificado.ra, url: certificado.url })
             .then(() => resolve());
         }
       })
