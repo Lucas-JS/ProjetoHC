@@ -77,7 +77,7 @@ export class GrupoPage {
         let certificado = {
           categoria: 'AtivMonit_Idiomas',
           atividade: atividade,
-          status: 'Pendente',
+          status: 'pendente',
           horasValidadas: 0,
           ra: raAluno,
           url: url

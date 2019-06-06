@@ -68,17 +68,9 @@
               </ion-row>
             </ion-item>
 
-            <!--<ion-row style="border-bottom: groove;">
-                  <ion-col col-lg-8>
-                    <ion-label>Aluno</ion-label>
-                  </ion-col>
-                  <ion-col col-lg-4>
-                    <ion-label>Ra</ion-label>
-                  </ion-col>
-                </ion-row>-->
-
             <ion-list>
-              <ion-row style="border-bottom: groove;" *ngFor="let alunos of aluno | async " (click)="getCertificado(alunos.ra)">
+              <ion-row style="border-bottom: groove;" *ngFor="let alunos of aluno | async "
+                (click)="getListaCertificado(alunos.ra)">
                 <ion-col col-lg-8>
                   <p class="text">{{alunos.nome}}</p>
                 </ion-col>
@@ -100,19 +92,57 @@
             </ion-item>
             <ion-list>
               <ion-row style="border-bottom: groove;" *ngFor="let certificados of certificado | async ">
-                <ion-col col-lg-4>
-                  <p class="text">{{certificados.categoria}}</p>
-                </ion-col>
-                <ion-col col-lg-4>
-                  <a href="{{certificados.url}}" target="blank">Visualizar</a>
+                <div *ngIf="certificados.status == 'pendente', then histPendente"></div>
+                <ng-template #histPendente>
+                  <ion-col col-lg-4>
+                    <p class="text">{{certificados.categoria}}</p>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <a href="{{certificados.url}}" target="blank"><button ion-button
+                        color="anhembiColor">Visualizar</button></a>
 
-                  <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
-                </ion-col>
-                <ion-col col-lg-4>
-                  <button ion-button color="anhembiColor" item-start icon-end (click)="validaCert(certificados.key)" >
-                    Validar
-                  </button>
-                </ion-col>
+                    <ion-icon title="pendente" ios="ios-alert" md="md-alert"></ion-icon>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <button ion-button color="anhembiColor"
+                      (click)="buscaCertificadoExp(certificados.key)">Avaliar</button>
+                  </ion-col>
+                </ng-template>
+                <div *ngIf="certificados.status == 'validado', then histValidado"></div>
+                <ng-template #histValidado>
+                  <ion-col col-lg-4>
+                    <p class="text">{{certificados.categoria}}</p>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <a href="{{certificados.url}}" target="blank"><button ion-button
+                        color="anhembiColor">Visualizar</button></a>
+
+                    <ion-icon title="validado" ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor">
+                    </ion-icon>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <button ion-button color="anhembiColor"
+                      (click)="buscaCertificadoExp(certificados.key)">Informações</button>
+                  </ion-col>
+                </ng-template>
+
+                <div *ngIf="certificados.status == 'recusado', then histRecusado"></div>
+                <ng-template #histRecusado>
+                  <ion-col col-lg-4>
+                    <p class="text">{{certificados.categoria}}</p>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <a href="{{certificados.url}}" target="blank"><button ion-button
+                        color="anhembiColor">Visualizar</button></a>
+
+                    <ion-icon title="recusado" ios="ios-close-circle" md="md-close-circle"></ion-icon>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <button ion-button color="anhembiColor"
+                      (click)="buscaCertificadoExp(certificados.key)">Informações</button>
+                  </ion-col>
+                </ng-template>
+
               </ion-row>
             </ion-list>
           </ion-col>
@@ -127,11 +157,40 @@
               </ion-row>
             </ion-item>
             <ion-list>
-              <ion-row style="border-bottom: groove;" *ngFor="let cert of certVal | async ">
-                <ion-col col-lg-4>
-                  <p class="text">{{cert.categoria}}</p>
-                </ion-col>
+              <ion-row style="border-bottom: groove;" *ngFor="let certificado of certVal | async ">
+                <div *ngIf="certificado.status == 'pendente', then maniPendente"></div>
+                <ng-template #maniPendente>
+                  <ion-col col-lg-4>
+                    <ion-input type="number" min="1" max="40" [(ngModel)]="horas" aria-placeholder="insira as horas">
+                    </ion-input>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <button ion-button color="anhembiColor" (click)="validaCert(horas,certificado.key)">Validar</button>
+                  </ion-col>
+                  <ion-col col-lg-4>
+                    <button ion-button color="red" (click)="recusaCert(certificado.key)">Recusar</button>
+                  </ion-col>
+                </ng-template>
 
+                <div *ngIf="certificado.status == 'validado', then infoValidado"></div>
+                <ng-template #infoValidado>
+                  <ion-col col-lg-6>
+                    <p class="text">{{certificado.horasValidadas}} horas validadas</p>
+                  </ion-col>
+                  <ion-col col-lg-6>
+                    <p class="text">Avaliado em: {{certificado.dataValid}}</p>
+                  </ion-col>
+                </ng-template>
+
+                <div *ngIf="certificado.status == 'recusado', then infoRecusado"></div>
+                <ng-template #infoRecusado>
+                  <ion-col col-lg-6>
+                    <p class="text">Certificado recusado</p>
+                  </ion-col>
+                  <ion-col col-lg-6>
+                    <p class="text">Avaliado em: {{certificado.dataValid}}</p>
+                  </ion-col>
+                </ng-template>
 
               </ion-row>
             </ion-list>

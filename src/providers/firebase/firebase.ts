@@ -24,7 +24,7 @@ export class FirebaseProvider {
       })
   }
 
-  // busca certificado pelo ra do aluno
+  // busca certificado pelo ra do aluno, tras a lista de certificados inseridos pelo aluno
   getCertificadoAluno(ra) {
     return this.db.list(this.PATH4, ref => ref.orderByChild('ra').equalTo(ra))
       .snapshotChanges()
@@ -118,29 +118,50 @@ export class FirebaseProvider {
     return this.db.list('certificado/').push(toSave);
   }
 
-  // TESTE DE INSERCAO E ATUALIZACAO DE CERTIFICADO
+  // Insere um novo certificado
   saveCert(certificado: any) {
-    return new Promise((resolve, reject) => {
-      if (certificado.key) {
-        // atualizando pela lista
-        this.db.list(this.PATH4)
-          .update(certificado.key, { categoria: certificado.categoria, ra: certificado.ra, url: certificado.url })
-          .then(() => resolve())
-          .catch((e) => reject(e));
-      } else {
-        this.db.list(this.PATH4)
-          .push({ categoria: certificado.categoria, status: certificado.status, horas: certificado.horas, ra: certificado.ra, url: certificado.url })
-          .then(() => resolve());
-      }
+    return new Promise((resolve) => {
+
+      this.db.list(this.PATH4)
+        .push({
+          categoria: certificado.categoria,
+          status: certificado.status,
+          horas: certificado.horas,
+          ra: certificado.ra,
+          url: certificado.url
+        })
+        .then(() => resolve());
+
     })
   }
 
-  // TESTE VALIDACAO CERTIFICADO
-  getCertificadoKey(key) {
-    return this.db.list(this.PATH4, ref => ref.orderByChild('key').equalTo(key))
+  // Retorna certificado a ser avaliado
+  getCertificadoKey(key: string) {
+    return this.db.list(this.PATH4, ref => ref.orderByKey().equalTo(key))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       })
+  }
+
+  // Valida certificado
+  validaCert(horas: number, key: string) {
+    return new Promise((resolve, reject) => {
+      // atualizando pelo objeto
+      this.db.object(this.PATH4 + key)
+        .update({ horasValidadas: horas, status: 'validado' })
+        .then(() => resolve())
+        .catch((e) => reject(e));
+    })
+  }
+
+  recusaCert(key:string){
+    return new Promise((resolve, reject) => {
+      // atualizando pelo objeto
+      this.db.object(this.PATH4 + key)
+        .update({status: 'recusado' })
+        .then(() => resolve())
+        .catch((e) => reject(e));
+    })
   }
 }
