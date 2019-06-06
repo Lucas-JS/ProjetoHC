@@ -18,8 +18,8 @@ export class ProfessorPage {
   selectCurso: any;
   curso: any;
   certificado: any;
-
-
+  html: any;
+  certVal: any;
 
   constructor(
     //public menuctrl: MenuController,
@@ -29,29 +29,24 @@ export class ProfessorPage {
   ) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
-
-
-
   }
-
-
 
   buscaAlunoCurso(curso: string): void {
     curso = this.selectCurso;
     this.aluno = this.firebaseService.getAlunoCurso(curso);
-
   }
 
   logoutProf(): void {
     this.navCtrl.push(LoginPage);
   }
 
-  getCertificado(ra: string): void {
-
+  getCertificado(ra:string): void {
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
-    //console.log(ra);
+    this.certificado.subscribe(arg => console.log(arg));
   }
 
-
-
+  validaCert(key): void{
+    //console.log(key);
+    this.certVal = this.firebaseService.getCertificadoKey(key);
+  }
 }

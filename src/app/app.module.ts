@@ -25,8 +25,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { HttpModule } from '@angular/http';
 import { FirebaseProvider } from '../providers/firebase/firebase';
-
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 
@@ -69,7 +68,8 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
   providers: [
     StatusBar,
     SplashScreen,
-    File,FileTransfer,DocumentViewer,
+    LoginPage,
+    File,FileTransfer,DocumentViewer,InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseProvider
   ]

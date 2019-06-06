@@ -1,12 +1,15 @@
-import { FirebaseProvider } from './../../providers/firebase/firebase';
+import { LoginPage } from './../login/login';
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-
-import { File } from '@ionic-native/file';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
-
 import { FirebaseApp } from 'angularfire2';
+
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
+
 
 
 @IonicPage()
@@ -24,23 +27,23 @@ export class GrupoPage {
   arquivo;
 
   certificado: any;
-
+  //Pega o RA pelo App Component
+  raAluno:string;
   files: Observable<any>;
 
-  //Mostrar O Avanço da Barra de Progresso
-  uploadProgress:Number=70;
-
   constructor(public firebaseService:FirebaseProvider,public navCtrl: NavController,
-    public navParams: NavParams, private document:DocumentViewer, private file:File,
-    private platform:Platform, @Inject(FirebaseApp) fb: any, public msgToastController:ToastController) {
+    public navParams: NavParams, public docs:DocumentViewer, public file:File, public filetransfer:FileTransfer, public app:InAppBrowser, public platform:Platform, @Inject(FirebaseApp) fb: any, public msgToastController:ToastController,
+    loginPage: LoginPage) {
 
     //Captura a opção selecionada e seleciona o grupo e atividades
     this.grupo = this.firebaseService.getGrupo(navParams.get('opcao'));
     this.atividade = this.firebaseService.getAtividade(navParams.get('opcao'));
     //Cria referência no Firebase Storage
     this.referencia = fb.storage().ref();
-
+    //Captura os dados do login para manipular no FormAluno
+    this.raAluno = loginPage.getRa();
     this.getCertificado(20881190);
+    console.log('teste grupo'+this.raAluno);
   }
 
   mudaCor(){
@@ -53,7 +56,9 @@ export class GrupoPage {
     this.arquivo = event.srcElement.files[0];
   }
 
-  enviarArquivo(dir: string, arquivo: string) {
+  enviarArquivo(atividade: string, arquivo: string) {
+    //Verifica qual tipo de categoria pertence a atividade
+    this.verCategoria(atividade);
     //Direciona a referência pela qual o arquivo vai percorrer no Firebase Storage
     arquivo = this.arquivo.name;
     let caminho = this.referencia.child('certificados');
@@ -67,15 +72,13 @@ export class GrupoPage {
     }, () => {
       // Função de retorno quando o upload estiver completo
       caminho.child(arquivo).getDownloadURL().then(url => {
-        //console.log('string para download', url);
-        let raAluno: number = 20881195; //MacGyver approves
-        let statusIni: string = "pendente";
-        let horasIni: number = 0;
+        let raAluno: number = 20881190; //MacGyver approves
         // cria objeto certificado para enviar pra coleção
         let certificado = {
-          categoria: dir,
-          status: statusIni,
-          horas: horasIni,
+          categoria: 'AtivMonit_Idiomas',
+          atividade: atividade,
+          status: 'Pendente',
+          horasValidadas: 0,
           ra: raAluno,
           url: url
         }
@@ -95,12 +98,12 @@ export class GrupoPage {
  }
 
   baixarArquivo(nome: string){
- //  nome = 'testeatividades.pdf';
-  // let caminho = this.referencia.child('Atividades Fora da Universidade/'+nome);
-  // caminho.getDownloadURL().then(url => {
-   //});
+   this.docs.viewDocument('https://expoforest.com.br/wp-content/uploads/2017/05/exemplo.pdf','application/pdf',{});
+  }
 
-   this.document.viewDocument('https://expoforest.com.br/wp-content/uploads/2017/05/exemplo.pdf','application/pdf',{});
+  //Verificar qual categoria pertence a atividade
+  verCategoria(ativ:string){
+
   }
 
   getCertificado(ra): void {
@@ -108,7 +111,30 @@ export class GrupoPage {
     this.certificado.subscribe(arg => console.log(arg));
   }
 
-  openPDF(){
+  //Abrir arquivos PDF Mobile
+  openMobPDF(certUrl:string):void{
+    //Cria variável com caminho de acordo com a plataforma
+    let path = null;
+    if(this.platform.is('ios')){
+     path = this.file.documentsDirectory;
+    }else{
+     path = this.file.dataDirectory;
+     console.log(path);
+    }
 
+    //Cria uma constante para receber a criação da instância do arquivo
+    const ft = this.filetransfer.create();
+
+    //Abre o arquivo
+    ft.download(certUrl, path + 'myFile.pdf').then(
+      res => {
+        let url = res.toURL();this.docs.viewDocument(url,'application/pdf',{});
+      })
+  }
+
+  //Abir arquivos PDF Web
+  openPDF(certUrl:string):void{
+    //Abre a guia com o arquivo escolhido
+    const browser = this.app.create(certUrl,'_system',"location=yes");
   }
 }

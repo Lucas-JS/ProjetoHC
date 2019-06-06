@@ -51,7 +51,26 @@
     text-align:center;
 }
 
-  /*Estilização do texto aluno*/
+
+  //Menu Web
+  p.textWebMenu{
+    font-size:16px;
+    font-weight: bold;
+  }
+
+  //Manual/Regulamento Web/Mobile
+  p.textFile{
+    font-size:10px;
+    font-weight: bold;
+  }
+
+  //Texto Web
+  p.textWeb{
+    font-size:14px;
+    font-weight: bold;
+  }
+
+  //Titulo Web
   p.textTitle{
     font-size:20px;
     font-weight: bold;
@@ -71,11 +90,6 @@
     font-size:20px;
     font-weight: bold;
     color: #FFFFFF;
-  }
-
-  p.text{
-    font-size:16px;
-    font-weight: bold;
   }
 
   //Texto Modelo Título Mobile
@@ -124,25 +138,12 @@
     font-weight: bold;
   }
 
-  /*Estilização da Barra de Progresso*/
-  p.progressOuter{
-    font-size:14px;
-    font-weight: bold;
-    color: #000000;
-  }
-
   /*Estilização da fonte das atividades*/
   p.tableAtiv{
     font-size:12px;
     font-weight: bold;
   }
 
-  /*Estilização do texto da informação do cadastro de atividades*/
-  p.infoCadAtiv{
-    font-size:12px;
-    font-style: oblique;
-    font-weight: bold;
-  }
 
   /*Estilização do icone do Aluno*/
   .tamIcon{
@@ -150,8 +151,21 @@
     color:#01AB8E;
   }
 
+  /*Estilização do icone do PDF*/
+  .tamIconPDF{
+    width: 25%;
+  }
+
   /*Estilização do icone da Situação Certificado*/
   .situacaoIcon{
     font-size:3.0em;
     text-align: end;
+  }
+
+
+  /*Estilização do texto das informações para o Aluno*/
+  p.infoCadAtiv{
+    font-size:12px;
+    font-style: oblique;
+    font-weight: bold;
   }

@@ -100,13 +100,18 @@
             </ion-item>
             <ion-list>
               <ion-row style="border-bottom: groove;" *ngFor="let certificados of certificado | async ">
-                <ion-col col-lg-8>
+                <ion-col col-lg-4>
                   <p class="text">{{certificados.categoria}}</p>
                 </ion-col>
                 <ion-col col-lg-4>
                   <a href="{{certificados.url}}" target="blank">Visualizar</a>
 
                   <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
+                </ion-col>
+                <ion-col col-lg-4>
+                  <button ion-button color="anhembiColor" item-start icon-end (click)="validaCert(certificados.key)" >
+                    Validar
+                  </button>
                 </ion-col>
               </ion-row>
             </ion-list>
@@ -122,15 +127,12 @@
               </ion-row>
             </ion-item>
             <ion-list>
-              <ion-row style="border-bottom: groove;" *ngFor="let certificados of certificado | async ">
-                <ion-col col-lg-8>
-                  <p class="text">{{certificados.categoria}}</p>
-                </ion-col>
+              <ion-row style="border-bottom: groove;" *ngFor="let cert of certVal | async ">
                 <ion-col col-lg-4>
-                  <a href="{{certificados.url}}" target="blank">Visualizar</a>
-
-                  <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
+                  <p class="text">{{cert.categoria}}</p>
                 </ion-col>
+
+
               </ion-row>
             </ion-list>
           </ion-col>

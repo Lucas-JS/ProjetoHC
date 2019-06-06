@@ -1,100 +1,120 @@
 <ion-header>
-  <ion-navbar color="anhembiColor" hideBackButton>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <!-- Título do Grupo-->
-      <p class="titleMobile" *ngFor="let item of grupo|async" showWhen="android,ios" text-initial>{{item.nome}}</p>
-      <p class="title" *ngFor="let item of grupo|async" showWhen="landscape">{{item.nome}}</p>
+    <ion-navbar color="anhembiColor" hideBackButton>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <!-- Título do Grupo-->
+        <p class="titleMobile" *ngFor="let item of grupo|async" showWhen="android,ios" text-initial>{{item.nome}}</p>
+        <p class="title" *ngFor="let item of grupo|async" showWhen="landscape">{{item.nome}}</p>
 
-    </ion-navbar>
-  </ion-header>
+      </ion-navbar>
+    </ion-header>
 
-  <ion-content padding class="planFundo">
-    <ion-grid col-12>
-      <ion-row justify-content-center>
-        <ion-col col-12>
-          <!-- Div para mostrar conteúdo do grupo -->
-            <div class="info">
-                <ion-row>
-                  <ion-col col-12>
-                    <br>
-                     <!-- Tabela de Horas do Grupo -->
-                     <ion-item *ngFor="let item of grupo|async">
-                        <div class="tabelaHoras">
-                          <ion-row justify-content-center>
-                              <p class="textTitle">Tabela de Horas</p>
-                          </ion-row>
-                          <ion-row justify-content-between>
-                              <ion-col col-xl-4 col-xs-12>
-                                <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
-                              </ion-col>
-                              <ion-col col-xl-4 col-xs-12>
-                                <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}</p>
-                              </ion-col>
-                              <ion-col col-xl-4 col-xs-12>
-                                <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
-                              </ion-col>
-                          </ion-row>
-                          </div>
-                      </ion-item>
+    <ion-content padding class="planFundo">
+      <ion-grid col-12>
+        <ion-row justify-content-center>
+          <ion-col col-12>
+            <!-- Div para mostrar conteúdo do grupo -->
+              <div class="info">
+                  <ion-row>
+                    <ion-col col-12>
+                      <br>
+                       <!-- Tabela de Horas do Grupo -->
+                       <ion-item *ngFor="let item of grupo|async">
+                          <div class="tabelaHoras">
+                            <ion-row justify-content-center>
+                                <p class="textTitle">Tabela de Horas</p>
+                            </ion-row>
+                            <ion-row justify-content-between>
+                                <ion-col col-xl-4 col-xs-12>
+                                  <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
+                                </ion-col>
+                                <ion-col col-xl-4 col-xs-12>
+                                  <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}</p>
+                                </ion-col>
+                                <ion-col col-xl-4 col-xs-12>
+                                  <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
+                                </ion-col>
+                            </ion-row>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                  </ion-row>
+
+                  <!-- Conteúdo pai das tabelas-->
+                  <ion-row>
+                  <!-- Tabela Cadastrado de Atividades -->
+                  <ion-col col-xl-8 col-sm-12>
+                    <ion-item color="anhembiColor">
+                      <ion-row justify-content-between>
+                          <p class="textWeb">ATIVIDADES</p>
+                          <p class="textWeb"> CH MÁXIMA</p>
+                      </ion-row>
+                    </ion-item>
+
+
+                  <ion-list radio-group>
+                    <ion-item *ngFor= "let item of atividade|async">
+                        <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
+                        <ion-label class="textWeb" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
+                        <ion-label class="textWeb" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
+                        <ion-label showWhen="android,ios">
+                            <ion-row>
+                            <ion-col col-10 text-wrap>
+                             <p class="textMobile" text-initial>{{item.nome}}</p>
+                            </ion-col>
+                            <ion-col col-2>
+                             <p class="textMobile"text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</p>
+                            </ion-col>
+                           </ion-row>
+                        </ion-label>
+                    </ion-item>
+                  </ion-list>
                   </ion-col>
-                </ion-row>
 
-                <!-- Conteúdo pai das tabelas-->
-                <ion-row>
-                <!-- Tabela Cadastrado de Atividades -->
-                <ion-col col-xl-8 col-sm-12>
-                  <ion-item color="anhembiColor">
-                    <ion-row justify-content-between>
-                        <p class="text">ATIVIDADES</p>
-                        <p class="text"> CH MÁXIMA</p>
-                    </ion-row>
-                  </ion-item>
+                  <!-- Tabela Histórico dos Certificados -->
+                  <ion-col col-xl-4 col-sm-12>
+                    <ion-item color="anhembiColor">
+                      <ion-row justify-content-center>
+                          <p class="textWeb">SITUAÇÃO CERTIFICADOS </p>
+                      </ion-row>
+                    </ion-item>
 
+                    <!-- Lista Certificados Mobile -->
+                    <ion-item *ngFor="let certificados of certificado|async" (click)="openMobPDF(certificados.url)" text-end showWhen="android,ios">
+                      <p class="textWeb">Testa ai DOGZAO</p>
+                      <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
+                    </ion-item>
 
-                <ion-list radio-group>
-                  <ion-item *ngFor= "let item of atividade|async">
-                      <ion-radio (ionSelect)="mudaCor()" [color]="cor"></ion-radio>
-                      <ion-label class="text" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
-                      <ion-label class="text" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
-                      <ion-label showWhen="android,ios">
+                     <!-- Lista Certificados Web -->
+                    <ion-item *ngFor="let certificados of certificado|async" (click)="openPDF(certificados.url)" showWhen="landscape">
+                        <ion-row>
+                          <ion-col text-initial>
+                           <p class="textWeb">{{certificados.atividade}}</p>
+                          </ion-col>
+
                           <ion-row>
-                          <ion-col col-10 text-wrap>
-                           <p class="textMobile" text-initial>{{item.nome}}</p>
-                          </ion-col>
-                          <ion-col col-2>
-                           <p class="textMobile"text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</p>
-                          </ion-col>
-                         </ion-row>
-                      </ion-label>
-                  </ion-item>
-                </ion-list>
-                </ion-col>
+                              <ion-col>
+                                <p class="textWeb">{{certificados.horasValidadas}} Hora(s)</p>
+                              </ion-col>
+                              <ion-col>
+                                <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
+                             </ion-col>
+                           </ion-row>
+                        </ion-row>
+                    </ion-item>
 
-                <!-- Tabela Histórico dos Certificados -->
-                <ion-col col-xl-4 col-sm-12>
-                  <ion-item color="anhembiColor">
-                    <ion-row justify-content-center>
-                        <p class="text">SITUAÇÃO CERTIFICADOS </p>
-                    </ion-row>
-                  </ion-item>
-
-                  <ion-item *ngFor="let certificados of certificado|async" text-center>
-                    <a href="{{certificados.url}}" target="blank">Visualizar</a>
-                    <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle" color="anhembiColor"></ion-icon>
-                  </ion-item>
-                </ion-col>
-               </ion-row>
-                <!-- 4 Linha dentro da div principal -->
-                <ion-row justify-content-between>
-                  <ion-col col-xl-3 col-md-4 col-12 *ngFor="let item of grupo|async">
-                    <input type="file" (change)="atualizaArquivo($event)" [disabled]="selected">
-                    <button ion-button color="anhembiColor" [disabled]="selected" (click)="enviarArquivo(item.nome)" full>CADASTRAR CERTIFICADO</button>
-                  </ion-col>
-                </ion-row>
-            </div>
-        </ion-col>
-       </ion-row>
-      </ion-grid>
-</ion-content>
+                   </ion-col>
+                 </ion-row>
+                  <!-- 4 Linha dentro da div principal -->
+                  <ion-row justify-content-between>
+                    <ion-col col-xl-3 col-md-4 col-12 *ngFor="let item of atividade|async">
+                      <input type="file" (change)="atualizaArquivo($event)" [disabled]="selected" accept=".pdf">
+                      <button ion-button color="anhembiColor" [disabled]="selected" (click)="enviarArquivo(item.nome)" full>CADASTRAR CERTIFICADO</button>
+                    </ion-col>
+                  </ion-row>
+              </div>
+          </ion-col>
+         </ion-row>
+        </ion-grid>
+  </ion-content>
