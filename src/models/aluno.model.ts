@@ -6,7 +6,7 @@ export class Aluno{
     public curso:string,
     public email:string,
     public semestre:string,
-    public horasCadastradas: Int32Array,
-    public horasTotais: Int32Array
+    public horasCadastradas: number,
+    public horasTotais: number
     ){}
 }

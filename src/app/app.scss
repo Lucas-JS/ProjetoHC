@@ -51,6 +51,17 @@
     text-align:center;
 }
 
+  /*Cor de fundo dos documentos*/
+  .corDoc{
+  background-color:	#f4f4f4;
+  opacity:0.9;
+  }
+
+  /*Cor do formulário do login*/
+  .corForm{
+  background-color: #1E90FF;
+  }
+
 
   //Menu Web
   p.textWebMenu{
@@ -125,6 +136,13 @@
   font-style: oblique;
   }
 
+  /*Estilo do Rodapé do Menu no Login*/
+  p.rodape{
+  color:#FFFFFF;
+  text-align: end;
+  font-style: oblique;
+  }
+
   /*Estilização de titulos*/
   p.subTitulo{
   color: #000000;
@@ -137,6 +155,27 @@
     font-size:16px;
     font-weight: bold;
   }
+
+  /*Estilização do texto login Mobile*/
+  p.textLoginMob{
+    font-size:14px;
+    font-weight: bold;
+    text-align: left;
+    color:#FFFFFF;
+    padding-block-start: 2%;
+    padding-block-end: 10%;
+  }
+
+  /*Estilização do texto login Web*/
+  p.textLoginWeb{
+    font-size:16px;
+    font-weight: bold;
+    text-align: left;
+    color:#FFFFFF;
+    padding-block-start: 2%;
+    padding-block-end: 10%;
+  }
+
 
   /*Estilização da fonte das atividades*/
   p.tableAtiv{
@@ -168,4 +207,42 @@
     font-size:12px;
     font-style: oblique;
     font-weight: bold;
+  }
+
+  /*ícones*/
+  .ion-md-alert{
+    color: yellow !important;
+    font-size: 2.0em;
+    background-color: #000000;
+    border-radius: 100%;
+  }
+  .ion-ios-alert{
+    color: yellow !important;
+    font-size:2.0em;
+    background-color: #000000;
+    border-radius: 100%;
+  }
+  .ion-md-close-circle{
+    color: red !important;
+    font-size:2.0em;
+  }
+  .ion-ios-close-circle{
+    color: red !important;
+    font-size:2.0em;
+  }
+  .ion-md-checkmark-circle{
+    color: green !important;
+    font-size:2.0em;
+  }
+  .ion-ios-checkmark-circle{
+    color: green !important;
+    font-size:2.0em;
+  }
+
+  // estilo listagem professor
+  .listagemProf{
+
+    background-color: solid #FFFFFF;
+    opacity: 1;
+    border: 4px solid gray;
   }

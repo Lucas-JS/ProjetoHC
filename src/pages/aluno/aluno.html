@@ -5,6 +5,12 @@
     </button>
     <!-- Título -->
     <ion-title>Minha Área</ion-title>
+    <!-- Sair -->
+    <ion-buttons end>
+      <button ion-button icon-only title="Sair" (click)="logoutAluno()">
+        <ion-icon name="power"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -62,7 +68,7 @@
                       </ion-row>
                       <ion-row justify-content-between>
                           <ion-col col-xl-4 col-xs-12>
-                            <p class="textHoras" text-center>Horas Cadastradas: {{item.horasCadastradas}}</p>
+                            <p class="textHoras" text-center>Horas Validadas: {{item.horasCadastradas}}</p>
                           </ion-col>
                           <ion-col col-xl-4 col-xs-12>
                             <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais - item.horasCadastradas}}</p>
@@ -79,12 +85,12 @@
             <!-- Executa apenas nos dispositivos móveis -->
             <ion-row justify-content-start showWhen="android,ios">
               <ion-col col-lg-2>
-                <ion-item button (click)="openMobPDF('Regulamento')" color="anhembiColor" text-center>
+                <ion-item button (click)="openMobPDF('Regulamento')" color=".corDoc" text-center>
                   <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Regulamento</p>
                 </ion-item>
               </ion-col>
               <ion-col col-lg-2>
-               <ion-item button (click)="openMobPDF('Manual')" color="anhembiColor" text-center>
+               <ion-item button (click)="openMobPDF('Manual')" color=".corDoc" text-center>
                 <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Manual</p>
                 </ion-item>
               </ion-col>
@@ -93,12 +99,12 @@
             <!-- Executar na WEB -->
             <ion-row justify-content-end showWhen="landscape">
               <ion-col col-lg-1>
-                <ion-item button (click)="openPDF('Regulamento')" color="anhembiColor" text-center>
+                <ion-item button (click)="openPDF('Regulamento')" color=".corDoc" text-center>
                   <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Regulamento</p>
                 </ion-item>
               </ion-col>
               <ion-col col-lg-1>
-               <ion-item button (click)="openPDF('Manual')" color="anhembiColor" text-center>
+               <ion-item button (click)="openPDF('Manual')" color=".corDoc" text-center>
                   <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Manual</p>
                </ion-item>
               </ion-col>

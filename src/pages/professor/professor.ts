@@ -1,6 +1,9 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ToastController
+} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { LoginPage } from '../login/login';
 
@@ -13,13 +16,15 @@ import { LoginPage } from '../login/login';
   ]
 })
 export class ProfessorPage {
+  public cor:string= "white";
   professor: Observable<any>;
   aluno: Observable<any>;
   selectCurso: any;
   curso: any;
   certificado: any;
+  html: any;
   certVal: any;
-  horas: number;
+  horas:number;
 
   constructor(
     //public menuctrl: MenuController,
@@ -32,32 +37,35 @@ export class ProfessorPage {
     this.professor = navParams.get('ColProfessor');
   }
 
-  logoutProf(): void {
-    this.navCtrl.push(LoginPage);
+   //Verifica opção do curso
+   optCurso(optCurso: string): void {
+    this.curso = optCurso;
   }
 
   // busca alunos de acordo com o curso
-  buscaAlunoCurso(curso: string): void {
-    curso = this.selectCurso;
-    this.aluno = this.firebaseService.getAlunoCurso(curso);
+  buscaAlunoCurso(): void {
+    this.aluno = this.firebaseService.getAlunoCurso(this.curso);
+    this.certVal = "";
+    this.certificado = "";
   }
 
   // busca a lista de certificados do aluno
   getListaCertificado(ra: string): void {
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
     this.certificado.subscribe(arg => console.log(arg));
+    this.certVal = "";
   }
 
-  // busca somente o certificado expecífico
-  buscaCertificadoExp(key: string): void {
+   // busca somente o certificado expecífico
+   buscaCertificadoExp(key: string): void {
     console.log(key);
     this.certVal = this.firebaseService.getCertificadoKey(key);
 
   }
 
   // valida certificado atribuindo horas, FALTA ATRIBUIR A DATA DE AVALIACAO
-  validaCert(horas: number, key: string) {
-    console.log(horas, key);
+  validaCert(horas:number, key:string, ra:string) {
+
     this.firebaseService.validaCert(horas, key)
       .then(() => {
         this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
@@ -66,6 +74,9 @@ export class ProfessorPage {
         this.toast.create({ message: 'Erro ao validar certificado.', duration: 3000 }).present();
         console.error(e);
       });
+      /*this.firebaseService.somaCertificaAluno(ra,horas);
+      console.log(ra);
+      console.log(key);*/
   }
 
   // altera status do certificado p recusado, FALTA ATRIBUIR A DATA DE AVALIACAO
@@ -81,5 +92,8 @@ export class ProfessorPage {
         console.error(e);
       });
   }
-}
 
+  logoutProf(): void {
+    this.navCtrl.push(LoginPage);
+  }
+}

@@ -6,10 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AlunoPage } from './../pages/aluno/aluno';
 import { LoginPage } from './../pages/login/login';
 import { GrupoPage } from '../pages/grupo/grupo';
-import { Observable } from 'rxjs';
-
-
-
 
 @Component({
   templateUrl: 'app.html'
@@ -20,8 +16,6 @@ export class MyApp{
   rootPage: any = LoginPage;
 
   opcao: boolean;
-  //Observador que recebe todos os dados do aluno
-  aluno: Observable<any>;
   //Variável para pegar o ra Temporario
   raTemp:any;
   //Cria coleção de páginas do Menu com os parâmetros necessários
@@ -29,7 +23,6 @@ export class MyApp{
 
   constructor(public plataforma: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
-    this.alunoMenu();
   }
 
   initializeApp() {
@@ -37,17 +30,7 @@ export class MyApp{
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-  }
-
-  //Salva os dados para transação entre telas
-  tempAluno(ra:number){
-   /*
-    this.aluno = colAluno;
-    this.aluno.subscribe(e=>e=(this.raTemp=e["0"].ra));
-    console.log('component'+this.raTemp);
-   */
-  this.raTemp = ra;
-  console.log('ra do component' + this.raTemp);
+    this.alunoMenu();
   }
 
   openPage(page) {

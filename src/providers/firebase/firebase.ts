@@ -13,57 +13,49 @@ export class FirebaseProvider {
   public PATH4 = 'certificado/';
   public PATH5 = 'professor/';
 
-  constructor(public db: AngularFireDatabase, public firebaseApp: FirebaseApp,
-    public afStorage: AngularFireStorage, public msgToast: ToastController) { }
+  raAluno:string;
 
-  get(key: string) {
+  constructor(public db:AngularFireDatabase, public firebaseApp: FirebaseApp,
+    public afStorage:AngularFireStorage, public msgToast:ToastController) {}
+
+  get(key: string){
     return this.db.object(this.PATH + key)
-      .snapshotChanges()
-      .map(c => {
-        return { key: c.key, ...c.payload.val() };
-      })
+    .snapshotChanges()
+    .map(c => {
+      return { key: c.key, ...c.payload.val() };
+    })
   }
 
-  // busca certificado pelo ra do aluno, tras a lista de certificados inseridos pelo aluno
+  // busca certificado pelo ra do aluno
   getCertificadoAluno(ra) {
     return this.db.list(this.PATH4, ref => ref.orderByChild('ra').equalTo(ra))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
-  }
-
-  // busca certificado pelo grupo do aluno
-  getCertificadoAluno2(grupo) {
-    return this.db.list(this.PATH2, ref => ref.orderByChild('grupo').equalTo(grupo))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
-  }
-
-  getLogin(userEmail, tipo) {
-    if (tipo == "aluno") {
-      return this.db.list(this.PATH, ref => ref.orderByChild('email').equalTo(userEmail))
         .snapshotChanges()
         .map(changes => {
-          return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-        })
-    } else {
-      if (tipo == "professor") {
-        return this.db.list(this.PATH5, ref => ref.orderByChild('email').equalTo(userEmail))
-          .snapshotChanges()
-          .map(changes => {
-            return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-          })
-      } else {
-        //Mensagem de erro
-        const toast = this.msgToast.create({
-          message: 'Usuário ou Senha Incorreto!!!'
-        })
-      }
-    }
+          return changes.map(c => ({key: c.payload.key, ...c.payload.val() }));
+    })
+  }
 
+  getLogin(userEmail,tipo){
+    if(tipo=="aluno"){
+      return this.db.list(this.PATH, ref => ref.orderByChild('email').equalTo(userEmail))
+      .snapshotChanges()
+      .map(changes =>{
+          return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
+      })
+    }else{
+      if(tipo=="professor"){
+      return this.db.list(this.PATH5, ref => ref.orderByChild('email').equalTo(userEmail))
+      .snapshotChanges()
+      .map(changes =>{
+          return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
+      })
+     }else{
+      //Mensagem de erro
+      const toast = this.msgToast.create({
+        message: 'Usuário ou Senha Incorreto!!!'
+      })
+     }
+    }
   }
 
   //Busca Aluno Pelo Curso
@@ -76,64 +68,74 @@ export class FirebaseProvider {
   }
 
   //Busca Grupo Especifico No Banco
-  getGrupo(grupo) {
+  getGrupo(grupo){
     return this.db.list(this.PATH2, ref => ref.orderByChild('nome').equalTo(grupo))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
+    .snapshotChanges()
+    .map(changes =>{
+        return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
+    })
   }
 
   //Busca Grupo Especifico No Banco
-  getAtividade(atividade) {
+  getAtividade(atividade){
     return this.db.list(this.PATH3, ref => ref.orderByChild('tipoGrupo').equalTo(atividade))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
+    .snapshotChanges()
+    .map(changes =>{
+        return changes.map(c =>({key: c.payload.key, ...c.payload.val()}));
+    })
   }
 
-  getFiles() {
+  getFiles(){
     //Busca no Banco
     let ref = this.db.list(this.PATH4);
     //Retorna Url de referência
     return ref.snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      });
+    .map(changes => {
+      return changes.map(c=>({key: c.payload.key, ...c.payload.val() }));
+    });
   }
 
-  uploadFile(information): AngularFireUploadTask {
-    let newName = `${new Date().getTime()}.pdf`;
+  //Salva ra
+  setRA(ra:string){
+    this.raAluno = ra;
+  }
+  //Busca ra
+  getRA(){
+    return this.raAluno;
+  }
+
+
+  uploadFile(information):AngularFireUploadTask{
+    let newName=`${new Date().getTime()}.pdf`;
     return this.afStorage.ref(`certificado/${newName}`).putString(information);
   }
 
-  storeToDatabase(metainfo) {
+  storeToDatabase(metainfo){
     let toSave = {
       created: metainfo.timeCreated,
       url: metainfo.dowloadURLs[0],
-      fullPath: metainfo.fullPath,
-      contentType: metainfo.contentType
+      fullPath:metainfo.fullPath,
+      contentType:metainfo.contentType
     }
     return this.db.list('certificado/').push(toSave);
   }
 
-  // Insere um novo certificado
-  saveCert(certificado: any) {
-    return new Promise((resolve) => {
-
-      this.db.list(this.PATH4)
-        .push({
-          categoria: certificado.categoria,
-          status: certificado.status,
-          horas: certificado.horas,
-          ra: certificado.ra,
-          url: certificado.url
-        })
-        .then(() => resolve());
-
-    })
-  }
+    // TESTE DE INSERCAO E ATUALIZACAO DE CERTIFICADO
+    saveCert(certificado: any) {
+      return new Promise((resolve, reject) => {
+        if (certificado.key) {
+          // atualizando pela lista
+          this.db.list(this.PATH4)
+            .update(certificado.key, { categoria: certificado.categoria, atividade:certificado.atividade,   status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url })
+            .then(() => resolve())
+            .catch((e) => reject(e));
+        } else {
+          this.db.list(this.PATH4)
+            .push({ categoria: certificado.categoria, atividade:certificado.atividade,   status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url})
+            .then(() => resolve());
+        }
+      })
+    }
 
   // Retorna certificado a ser avaliado
   getCertificadoKey(key: string) {
@@ -144,8 +146,8 @@ export class FirebaseProvider {
       })
   }
 
-  // Valida certificado
-  validaCert(horas: number, key: string) {
+  //Valida certificado
+  validaCert(horas:number, key:string) {
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
@@ -154,6 +156,11 @@ export class FirebaseProvider {
         .catch((e) => reject(e));
     })
   }
+  // soma horas do certificado
+  /*somaCertificaAluno(ra:string,horas:number){
+
+
+}*/
 
   recusaCert(key:string){
     return new Promise((resolve, reject) => {

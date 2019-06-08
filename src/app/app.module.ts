@@ -37,7 +37,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     ProfessorPage,
     //Grupo de Atividades Declaradas
     GrupoPage,
-    ListPage
+    ListPage,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +68,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   providers: [
     StatusBar,
     SplashScreen,
-    LoginPage,
     File,FileTransfer,DocumentViewer,InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseProvider

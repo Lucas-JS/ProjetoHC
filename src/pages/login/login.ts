@@ -7,9 +7,6 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_TRANSITION_PROVIDERS } from '@angular/platform-browser/src/browser/server-transition';
-import { empty } from 'rxjs/Observer';
-import { MyApp } from '../../app/app.component';
 
 
 @Component({
@@ -28,7 +25,7 @@ export class LoginPage {
   professor: Observable<any>;
 
   error: boolean = false;
-  raAluno:string;
+
   //FormBuilder é o responsável pela criação do formulário
   constructor(private firebaseauth: AngularFireAuth, public firebaseService:FirebaseProvider,
   public toatsCtrl:ToastController, public formBuilder:FormBuilder, public navCtrl: NavController,
@@ -43,7 +40,6 @@ export class LoginPage {
 
   //Método de autentificação de Login
   async login(user:User){
-
     try{
         //Verifica o tipo de usuário ( Aluno ou Professor)
         this.aluno = this.firebaseService.getLogin(user.email, this.tipo='aluno');
@@ -58,7 +54,6 @@ export class LoginPage {
               .catch((erro: any) => {
                 this.msgErro(this.error=true);
               });
-
           }else{
             this.professor = this.firebaseService.getLogin(user.email, this.tipo='professor');
             this.professor.subscribe(p => {
@@ -94,14 +89,6 @@ export class LoginPage {
     toast.present();
     this.error=false;
    }
-  }
-   setRa(user:User ){
-    this.raAluno = user.email.substr(0,8);
-    console.log('ra LoginPage: '+this.raAluno);
-
-  }
-  getRa(){
-    return this.raAluno;
   }
 }
 

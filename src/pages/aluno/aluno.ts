@@ -1,4 +1,3 @@
-
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { File} from '@ionic-native/file';
@@ -7,7 +6,9 @@ import { Component, AfterViewInit, TestabilityRegistry} from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, Platform} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { MyApp } from '../../app/app.component';
+
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -20,12 +21,24 @@ export class AlunoPage{
   //Barra de Progresso
   uploadProgress;
   urlWeb:string;
+  //RA Aluno para busca
+  raAluno:string;
 
-  constructor(public menuctrl:MenuController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public appComponent:MyApp) {
+  constructor(public menuctrl:MenuController,public navCtrl: NavController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public firebaseService:FirebaseProvider) {
     //Captura os dados do login para manipular no FormAluno
     this.aluno = navParams.get('ColAluno');
     //Torna as informações do aluno Global
-    //this.appComponent.tempAluno(this.aluno);
+    this.tempAluno();
+  }
+
+  //Verifica o RA do aluno para buscar certificados
+  tempAluno(){
+    this.aluno.subscribe(e=>{e=(e["0"].ra);this.firebaseService.setRA(e)});
+  }
+
+  //Método para enviar o ra
+  envRA(){
+    return this.raAluno;
   }
 
   //Abre PDF para dispositivos Móveis
@@ -64,4 +77,10 @@ export class AlunoPage{
     //Abre a guia com o arquivo escolhido
     const browser = this.app.create(this.urlWeb,'_system',"location=yes");
   }
+
+  logoutAluno(){
+    this.navCtrl.setRoot(LoginPage);
+  }
 }
+
+

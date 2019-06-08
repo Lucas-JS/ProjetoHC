@@ -1,33 +1,36 @@
 <ion-row>
-    <!-- Div imagem da esquerda-->
-    <div class="planFundoLogin" hideWhen="!landscape,android,ios" col-lg-8 col-md-6 col-sm-3></div>
-    <!-- Div formulário da direita-->
-    <div class="login" col-lg-4 col-md-6 col-sm-9 col-sm-9 col-xs-10 col-12>
-        <ion-col col-4>
-          <!-- Logo -->
-          <img src="../assets/logo.png" />
-          <!-- Descrição Inicial -->
-          <p class="texto">Bem-vindo ao Aplicativo de Horas Complementares da Anhembi Morumbi. Para continuar, entre com seu RA e senha.</p>
+  <!-- Div imagem da esquerda-->
+  <div class="planFundoLogin" hideWhen="!landscape,android,ios" col-lg-8 col-md-6 col-sm-3></div>
+  <!-- Div formulário da direita-->
+  <div class="login" col-lg-4 col-md-6 col-sm-9 col-sm-9 col-xs-10 col-12>
+      <ion-col col-4>
+        <!-- Logo -->
+        <img src="../assets/logo.png" />
+        <!-- Descrição Inicial -->
+        <p class="textLoginMob" showWhen="android,ios">Bem-vindo ao Aplicativo de Horas Complementares da Universidade Anhembi Morumbi. Para continuar, entre com seu RA e senha.</p>
+        <p class="textLoginWeb" showWhen="landscape">Bem-vindo ao Aplicativo de Horas Complementares da Universidade Anhembi Morumbi. Para continuar, entre com seu RA e senha.</p>
+        <!--Formulário (passando valor correndo pela variável event chamando o prevent para não atualizar a page)-->
+        <form [formGroup]="loginForm" class="corForm" (ngSubmit)="login(user); $event.preventDefault()">
+            <ion-list>
+              <!-- E-mail -->
+              <ion-item>
+                <ion-label floating>E-mail Institucional:</ion-label>
+                <ion-input type="text" formControlName="email" value="20731356@anhembi.com.br" spellcheck="false" [(ngModel)]="user.email"></ion-input>
+              </ion-item>
+              <!-- Senha -->
+              <ion-item>
+                <ion-label floating>Senha:</ion-label>
+                <ion-input type="password" formControlName="senha" [(ngModel)]="user.senha" value="12345678"></ion-input>
+              </ion-item>
+              <!-- Enviar Info -->
+              <ion-item>
+                <button ion-button type="submit" color="anhembiColor" [disabled]="loginForm.invalid" full block>ENTRAR</button>
+              </ion-item>
+            </ion-list>
+        </form>
 
-          <!--Formulário (passando valor correndo pela variável event chamando o prevent para não atualizar a page)-->
-          <form [formGroup]="loginForm" (ngSubmit)="login(user); $event.preventDefault()">
-              <ion-list>
-                <!-- E-mail -->
-                <ion-item>
-                  <ion-label floating>E-mail Institucional:</ion-label>
-                  <ion-input type="text" formControlName="email" value="20881190@anhembi.com.br" spellcheck="false" [(ngModel)]="user.email"></ion-input>
-                </ion-item>
-                <!-- Senha -->
-                <ion-item>
-                  <ion-label floating>Senha:</ion-label>
-                  <ion-input type="password" formControlName="senha" [(ngModel)]="user.senha" value="12345678"></ion-input>
-                </ion-item>
-                <!-- Enviar Info -->
-                <ion-item>
-                  <button ion-button type="submit" color="anhembiColor" [disabled]="loginForm.invalid" full block>ENTRAR</button>
-                </ion-item>
-              </ion-list>
-          </form>
-        </ion-col>
-    </div>
+      <!-- Descrição Laureate -->
+      <p class="rodape">© Laureate Education, Inc.</p>
+      </ion-col>
+  </div>
 </ion-row>
