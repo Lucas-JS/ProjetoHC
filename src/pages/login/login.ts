@@ -3,7 +3,7 @@ import { User } from './../../models/user.model';
 import { ProfessorPage } from './../professor/professor';
 import { AlunoPage } from './../aluno/aluno';
 import { Component, animate } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, MenuController } from 'ionic-angular';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
@@ -29,13 +29,15 @@ export class LoginPage {
   //FormBuilder é o responsável pela criação do formulário
   constructor(private firebaseauth: AngularFireAuth, public firebaseService:FirebaseProvider,
   public toatsCtrl:ToastController, public formBuilder:FormBuilder, public navCtrl: NavController,
-   public navParams: NavParams, public msgToastController:ToastController) {
+   public navParams: NavParams, public msgToastController:ToastController, public menu:MenuController) {
 
   this.loginForm = this.formBuilder.group({
        //Objeto que irá configurar os campos do formulário
        email: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
        senha: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
      });
+
+  this.menu.enable(false);
   }
 
   //Método de autentificação de Login
@@ -77,7 +79,6 @@ export class LoginPage {
     }catch(e){
       console.log(e);
   }}
-
   msgErro(errorReceb){
     if(errorReceb!=false){
     //Mensagem de erro

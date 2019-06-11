@@ -1,15 +1,14 @@
-import { Certificado } from './../../models/certificado.model';
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseApp } from 'angularfire2';
-
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { LoginPage } from '../login/login';
+import { AlunoPage } from '../aluno/aluno';
 
 
 @IonicPage()
@@ -36,8 +35,6 @@ export class GrupoPage {
   //condição dos ícones dos certificados
   corIcon:string;
   nomeIcon:string;
-  //Busca Certificado
-  certifModel={} as Certificado;
   //Objeto que escuta os dados no banco
   aluno:Observable<any>;
 
@@ -50,9 +47,6 @@ export class GrupoPage {
     this.referencia = fb.storage().ref();
     //Busca certificados pelo RA do aluno
     this.getCertificado(this.firebaseService.getRA());
-
-    //Captura os dados do login para manipular no FormGrupo
-    this.aluno = navParams.get('ColAluno');
   }
 
   mudaCor(ativ:string){
@@ -66,9 +60,12 @@ export class GrupoPage {
     this.arquivo = event.srcElement.files[0];
   }
 
-  enviarArquivo(atividade: string, arquivo: string) {
+  enviarArquivo(grupo: string, arquivo: string) {
     //Direciona a referência pela qual o arquivo vai percorrer no Firebase Storage
-    arquivo = this.arquivo.name;
+
+     try {
+      arquivo = this.arquivo.name;
+
     let caminho = this.referencia.child('certificados');
     //Cria uma variante para o arquivo selecionado
     let tarefa = caminho.child(arquivo).put(this.arquivo);
@@ -77,31 +74,29 @@ export class GrupoPage {
       console.log('snapshot', snapshot);
     }, error => {
       // Tratar possíveis erros
+      if(error){
+        this.msgToastController.create({ message: 'Erro ao inserir certicado, certifique-se de inserir arquivo!', duration: 5000 }).present();
+      }
     }, () => {
-      console.log(this.ativ);
       // Função de retorno quando o upload estiver completo
       caminho.child(arquivo).getDownloadURL().then(url => {
         // cria objeto certificado para enviar pra coleção
-        let certificado = {
-          categoria: 'AtivMonit_Idiomas',
-          atividade: this.ativ,
+        let certificadoJson = {
+          categoria: this.ativ,
           status: 'pendente',
           horasValidadas: 0,
           ra: this.firebaseService.getRA(), //MacGyver approves
           url: url
         }
         // salva objeto certificado na coleção
-        this.firebaseService.saveCert(certificado);
+        this.firebaseService.saveCert(certificadoJson);
       });
+      this.msgToastController.create({ message: 'Certificado enviado com sucesso.', duration: 3000 }).present();
+  })} catch (error) {
+      console.log('falta arquivo',error);
+      this.msgToastController.create({ message: 'Erro ao inserir certificado, certifique-se de inserir arquivo!', duration: 5000 }).present();
+    };
 
-    });
-
-    const toast = this.msgToastController.create({
-      message: 'Certificado foi enviado com sucesso!!!',
-      position: 'end',
-      duration: 5000
-    })
-    toast.present();
  }
 
   baixarArquivo(nome: string){
@@ -158,6 +153,11 @@ export class GrupoPage {
     const browser = this.app.create(certUrl,'_system',"location=yes");
   }
 
+  //Volta para tela do aluno
+  backHome(){
+    this.aluno = this.firebaseService.getAluno();
+    this.aluno.subscribe(a=> this.navCtrl.push(AlunoPage,{ColAluno:this.aluno}));
+  }
   //Logout do Professor
   logoutGrupo(){
     this.navCtrl.setRoot(LoginPage);

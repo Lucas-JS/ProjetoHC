@@ -7,7 +7,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -37,7 +36,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     ProfessorPage,
     //Grupo de Atividades Declaradas
     GrupoPage,
-    ListPage,
   ],
   imports: [
     BrowserModule,
@@ -62,8 +60,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     AlunoPage,
     ProfessorPage,
     //Grupo de Atividades Declaradas
-    GrupoPage,
-    ListPage
+    GrupoPage
   ],
   providers: [
     StatusBar,

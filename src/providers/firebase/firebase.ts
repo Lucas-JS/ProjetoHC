@@ -3,6 +3,7 @@ import { AngularFireDatabase, snapshotChanges } from "angularfire2/database";
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { ToastController } from 'ionic-angular';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -14,6 +15,8 @@ export class FirebaseProvider {
   public PATH5 = 'professor/';
 
   raAluno:string;
+  aluno:Observable<any>;
+  retAluno:Observable<any>;
 
   constructor(public db:AngularFireDatabase, public firebaseApp: FirebaseApp,
     public afStorage:AngularFireStorage, public msgToast:ToastController) {}
@@ -26,7 +29,7 @@ export class FirebaseProvider {
     })
   }
 
-  // busca certificado pelo ra do aluno
+  //busca certificado pelo ra do aluno
   getCertificadoAluno(ra) {
     return this.db.list(this.PATH4, ref => ref.orderByChild('ra').equalTo(ra))
         .snapshotChanges()
@@ -61,6 +64,15 @@ export class FirebaseProvider {
   //Busca Aluno Pelo Curso
   getAlunoCurso(curso) {
     return this.db.list(this.PATH, ref => ref.orderByChild('curso').equalTo(curso))
+      .snapshotChanges()
+      .map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+  }
+
+  //Busca Aluno Pelo Curso
+   getAlunoRA(ra) {
+    return this.db.list(this.PATH, ref => ref.orderByChild('ra').equalTo(ra))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -104,6 +116,16 @@ export class FirebaseProvider {
     return this.raAluno;
   }
 
+  //Guarda os dados do aluno
+  setAluno(aluno){
+    this.aluno = aluno;
+  }
+
+  //Emite dados do aluno
+  getAluno(){
+    return this.aluno;
+  }
+
 
   uploadFile(information):AngularFireUploadTask{
     let newName=`${new Date().getTime()}.pdf`;
@@ -126,15 +148,23 @@ export class FirebaseProvider {
         if (certificado.key) {
           // atualizando pela lista
           this.db.list(this.PATH4)
-            .update(certificado.key, { categoria: certificado.categoria, atividade:certificado.atividade,   status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url })
+            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url })
             .then(() => resolve())
             .catch((e) => reject(e));
         } else {
           this.db.list(this.PATH4)
-            .push({ categoria: certificado.categoria, atividade:certificado.atividade,   status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url})
+            .push({ categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url})
             .then(() => resolve());
         }
       })
+    }
+
+    //ATUALIZAÇÃO DE DADOS ALUNO
+    updateAluno(retAluno:any,horas:number) {
+      this.retAluno = retAluno;
+      this.retAluno.subscribe(alunoTemp=>
+        this.db.list(this.PATH)
+        .update(alunoTemp["0"].key, {horasCadastradas:(Number(alunoTemp["0"].horasCadastradas))}))
     }
 
   // Retorna certificado a ser avaliado
@@ -147,26 +177,21 @@ export class FirebaseProvider {
   }
 
   //Valida certificado
-  validaCert(horas:number, key:string) {
+  validaCert(horas: number, key: string, msgObs:string) {
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({ horasValidadas: horas, status: 'validado' })
+        .update({ horasValidadas: horas, status: 'validado', observacao: msgObs })
         .then(() => resolve())
         .catch((e) => reject(e));
     })
   }
-  // soma horas do certificado
-  /*somaCertificaAluno(ra:string,horas:number){
 
-
-}*/
-
-  recusaCert(key:string){
+  recusaCert(key:string, msgObs:string){
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({status: 'recusado' })
+        .update({status: 'recusado', observacao: msgObs })
         .then(() => resolve())
         .catch((e) => reject(e));
     })

@@ -8,6 +8,9 @@
       <p class="title" *ngFor="let item of grupo|async" showWhen="landscape">{{item.nome}}</p>
       <!-- Sair -->
       <ion-buttons end>
+        <button ion-button icon-only title="Minha Área" (click)="backHome()">
+          <ion-icon name="home"></ion-icon>
+        </button>
         <button ion-button icon-only title="Sair" (click)="logoutGrupo()">
           <ion-icon name="power"></ion-icon>
         </button>
@@ -37,15 +40,15 @@
               <ion-list radio-group>
                   <ion-item *ngFor= "let item of atividade|async">
                       <ion-radio (ionSelect)="mudaCor(item.nome)" [color]="cor"></ion-radio>
-                      <ion-label class="textWeb" showWhen="landscape" text-initial>{{item.nome}}</ion-label>
-                      <ion-label class="textWeb" showWhen="landscape" text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</ion-label>
+                      <ion-label showWhen="landscape" text-initial><p class="textWeb" >{{item.nome}}</p></ion-label>
+                      <ion-label showWhen="landscape" text-end><p class="textWeb" >{{item.horasTotais}}</p></ion-label>
                       <ion-label showWhen="android,ios">
                           <ion-row>
                           <ion-col col-10 text-wrap>
                            <p class="textMobile" text-initial>{{item.nome}}</p>
                           </ion-col>
                           <ion-col col-2>
-                           <p class="textMobile"text-end>{{item.horasCadastradas}}/{{item.horasTotais}}</p>
+                           <p class="textMobile"text-end>{{item.horasTotais}}</p>
                           </ion-col>
                          </ion-row>
                       </ion-label>
@@ -57,17 +60,16 @@
                 <ion-col col-xl-4 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-center>
-                        <p class="textWeb">SITUAÇÃO CERTIFICADOS </p>
+                        <p class="textWeb">SITUAÇÃO CERTIFICADOS</p>
                     </ion-row>
                   </ion-item>
 
                   <!-- Lista Certificados Mobile -->
                   <ion-item *ngFor="let certificados of certificado|async" (click)="openMobPDF(certificados.url)" showWhen="android,ios">
                     <ion-row>
-                      <ion-col text-initial>
-                       <p class="textMobile">{{certificados.atividade}}</p>
+                      <ion-col text-wrap>
+                       <p class="textMobile">{{certificados.categoria}}</p>
                       </ion-col>
-
                       <ion-row>
                           <ion-col>
                             <p class="textMobile">{{certificados.horasValidadas}} Hora(s)</p>
@@ -83,17 +85,29 @@
                   <ion-item *ngFor="let certificados of certificado|async" (click)="openPDF(certificados.url)" showWhen="landscape">
                       <ion-row>
                         <ion-col text-initial>
-                         <p class="textWeb">{{certificados.atividade}}</p>
+                            <p class="textWeb">{{certificados.categoria}}</p>
                         </ion-col>
 
                         <ion-row>
-                            <ion-col>
-                              <p class="textWeb">{{certificados.horasValidadas}} Hora(s)</p>
-                            </ion-col>
-                            <ion-col>
-                              <ion-icon name="{{certificados.status}}" color="anhembiColor"></ion-icon>
-                           </ion-col>
-                         </ion-row>
+                            <div *ngIf="certificados.status == 'pendente', then histPendente"></div>
+                            <div *ngIf="certificados.status == 'validado', then histValidado"></div>
+                            <div *ngIf="certificados.status == 'recusado', then histRecusado"></div>
+                            <ng-template #histPendente>
+                                <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <ion-icon title="Pendente" class="ion-md-alert">&nbsp;</ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                            </ng-template>
+                            <ng-template #histValidado>
+                                <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <ion-icon title="Validado" class="ion-md-checkmark-circle">&nbsp;</ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                            </ng-template>
+                            <ng-template #histRecusado>
+                                <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <ion-icon title="Recusado" class="ion-md-close-circle">&nbsp;</ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                            </ng-template>
+                      </ion-row>
                       </ion-row>
                   </ion-item>
 

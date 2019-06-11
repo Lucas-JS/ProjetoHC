@@ -3,7 +3,6 @@ import { Component, ViewChild} from '@angular/core';
 import { Nav, Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AlunoPage } from './../pages/aluno/aluno';
 import { LoginPage } from './../pages/login/login';
 import { GrupoPage } from '../pages/grupo/grupo';
 
@@ -41,7 +40,6 @@ export class MyApp{
   alunoMenu(){
      //Array de Menu Aluno
      this.pages = [
-      { title: 'Minha Área', component: AlunoPage, raAluno:this.raTemp},
       //Grupos de Atividades que o aluno cadastra seus comprovantes
       { title: 'Atividades Fora da Universidade', component: GrupoPage, raAluno:this.raTemp},
       { title: 'Atividades de Extensão', component: GrupoPage, raAluno:this.raTemp},

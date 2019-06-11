@@ -24,11 +24,15 @@ export class AlunoPage{
   //RA Aluno para busca
   raAluno:string;
 
-  constructor(public menuctrl:MenuController,public navCtrl: NavController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public firebaseService:FirebaseProvider) {
+  constructor(public menuctrl:MenuController,public navCtrl: NavController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public firebaseService:FirebaseProvider, public menu:MenuController) {
     //Captura os dados do login para manipular no FormAluno
     this.aluno = navParams.get('ColAluno');
+    //Passa os dados para o provider para guardar valores globalmente
+    this.firebaseService.setAluno(this.aluno);
+    this.aluno.subscribe(a=>console.log(a));
     //Torna as informações do aluno Global
     this.tempAluno();
+    this.menu.enable(true);
   }
 
   //Verifica o RA do aluno para buscar certificados
