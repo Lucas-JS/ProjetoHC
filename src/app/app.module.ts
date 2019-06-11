@@ -25,6 +25,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { HttpModule } from '@angular/http';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 
@@ -39,6 +40,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   ],
   imports: [
     BrowserModule,
+    OrderModule, // ordenar por outros campos com os dados já no client, ainda n testei
     IonicModule.forRoot(MyApp),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

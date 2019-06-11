@@ -85,6 +85,7 @@ export class GrupoPage {
           categoria: this.ativ,
           status: 'pendente',
           horasValidadas: 0,
+          dataEnvio: this.firebaseService.pegaData(),
           ra: this.firebaseService.getRA(), //MacGyver approves
           url: url
         }

@@ -144,18 +144,16 @@ export class FirebaseProvider {
 
     // TESTE DE INSERCAO E ATUALIZACAO DE CERTIFICADO
     saveCert(certificado: any) {
-      return new Promise((resolve, reject) => {
-        if (certificado.key) {
-          // atualizando pela lista
-          this.db.list(this.PATH4)
-            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url })
-            .then(() => resolve())
-            .catch((e) => reject(e));
-        } else {
-          this.db.list(this.PATH4)
-            .push({ categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url})
-            .then(() => resolve());
-        }
+      return new Promise((resolve) => {
+        this.db.list(this.PATH4)
+        .push( {
+           categoria: certificado.categoria,
+           status:certificado.status,
+           horasValidadas:certificado.horasValidadas,
+           dataEnvio: certificado.dataEnvio,
+           ra: certificado.ra,
+           url: certificado.url
+           }).then(() => resolve());
       })
     }
 
@@ -165,6 +163,7 @@ export class FirebaseProvider {
       this.retAluno.subscribe(alunoTemp=>
         this.db.list(this.PATH)
         .update(alunoTemp["0"].key, {horasCadastradas:(Number(alunoTemp["0"].horasCadastradas))}))
+
     }
 
   // Retorna certificado a ser avaliado
@@ -177,23 +176,36 @@ export class FirebaseProvider {
   }
 
   //Valida certificado
-  validaCert(horas: number, key: string, msgObs:string) {
+  validaCert(key: string, horas: number, msgObs:string, dataAval:string) {
+
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({ horasValidadas: horas, status: 'validado', observacao: msgObs })
+        .update({ horasValidadas: +horas, status: 'validado', observacao: msgObs, dataAvaliacao: dataAval })
+        .then(() => resolve())
+        .catch((e) => reject(e));
+    })
+
+  }
+
+  recusaCert(key:string, msgObs:string, dataAval:string){
+    return new Promise((resolve, reject) => {
+      // atualizando pelo objeto
+      this.db.object(this.PATH4 + key)
+        .update({status: 'recusado', observacao: msgObs, dataAvaliacao: dataAval })
         .then(() => resolve())
         .catch((e) => reject(e));
     })
   }
 
-  recusaCert(key:string, msgObs:string){
-    return new Promise((resolve, reject) => {
-      // atualizando pelo objeto
-      this.db.object(this.PATH4 + key)
-        .update({status: 'recusado', observacao: msgObs })
-        .then(() => resolve())
-        .catch((e) => reject(e));
-    })
+  // pegar data atual
+  pegaData() {
+    var data = new Date();
+    var dia = data.getDate();
+    var mes = data.getMonth();
+    var ano = data.getFullYear();
+
+    var dataVal = dia + "/" + mes + "/" + ano;
+    return dataVal;
   }
 }

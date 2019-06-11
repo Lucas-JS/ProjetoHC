@@ -1,7 +1,9 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,/*, MenuController */
-ToastController,Platform} from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import {
+  IonicPage, NavController, NavParams,
+  ToastController, Platform
+} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { LoginPage } from '../login/login';
 import { File } from '@ionic-native/file';
@@ -29,48 +31,55 @@ export class ProfessorPage {
   selecAluno: Observable<any>;
   msgObs: string;
 
-  cor:string;
-  corFixa:string = "anhembiColor";
-  selectCor:boolean;
+  cor: string;
+  corFixa: string = "anhembiColor";
+  selectCor: boolean;
+  selected: boolean = true;
 
   constructor(
     //public menuctrl: MenuController,
-    public firebaseService: FirebaseProvider, public navCtrl: NavController,public navParams: NavParams,private toast: ToastController, public platform:Platform, public file:File,public filetransfer:FileTransfer,public docs:DocumentViewer,public app:InAppBrowser
+    public firebaseService: FirebaseProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, public platform: Platform, public file: File, public filetransfer: FileTransfer, public docs: DocumentViewer, public app: InAppBrowser
   ) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
   }
 
+  ngAfterViewInit() {
+    console.log(this.horas);
+    if (this.horas != null) {
+      return this.selected = false;
+    } else {
+      return this.selected = true;
+    }
+  }
+
+
   //Muda cor para cor padrão
-  mudaCor(){
-    this.selectCor=false;
+  mudaCor() {
+    this.selectCor = false;
     return this.cor = "anhembiColor";
   }
 
   //Busca curso no banco
-  buscaAlunoCurso(){
+  buscaAlunoCurso() {
     this.aluno = this.firebaseService.getAlunoCurso(this.curso);
     this.certVal = "";
     this.certificado = "";
   }
 
   //Verifica opção do curso
-  optCurso(optCurso:string):void{
-   this.curso = optCurso;
+  optCurso(optCurso: string): void {
+    this.curso = optCurso;
   }
 
   // busca somente o certificado expecífico
-  buscaCertificadoExp(key: string){
-    this.msgObs = "";
+  buscaCertificadoExp(key: string) {
+    this.msgObs = null;
     this.horas = null;
     this.certVal = this.firebaseService.getCertificadoKey(key);
   }
 
-  logoutProf(): void {
-    this.navCtrl.push(LoginPage);
-  }
-
-  getCertificado(ra:string): void {
+  getCertificado(ra: string): void {
     //Atualiza certificados do aluno
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
     //Atualiza os dados do aluno local
@@ -79,13 +88,13 @@ export class ProfessorPage {
   }
 
   //Abrir arquivos PDF Mobile
-  openMobPDF(certUrl:string):void{
+  openMobPDF(certUrl: string): void {
     //Cria variável com caminho de acordo com a plataforma
     let path = null;
-    if(this.platform.is('ios')){
-     path = this.file.documentsDirectory;
-    }else{
-     path = this.file.dataDirectory;
+    if (this.platform.is('ios')) {
+      path = this.file.documentsDirectory;
+    } else {
+      path = this.file.dataDirectory;
     }
 
     //Cria uma constante para receber a criação da instância do arquivo
@@ -94,43 +103,64 @@ export class ProfessorPage {
     //Abre o arquivo
     ft.download(certUrl, path + 'myFile.pdf').then(
       res => {
-        let url = res.toURL();this.docs.viewDocument(url,'application/pdf',{});
+        let url = res.toURL(); this.docs.viewDocument(url, 'application/pdf', {});
       })
   }
 
   //Abir arquivos PDF Web
-  openPDF(certUrl:string):void{
+  openPDF(certUrl: string): void {
     //Abre a guia com o arquivo escolhido
-    const browser = this.app.create(certUrl,'_system',"location=yes");
+    const browser = this.app.create(certUrl, '_system', "location=yes");
   }
 
+ /* // pegar data atual
+  pegaData() {
+    var data = new Date();
+    var dia = data.getDate();
+    var mes = data.getMonth();
+    var ano = data.getFullYear();
 
- // valida certificado atribuindo horas, FALTA ATRIBUIR A DATA DE AVALIACAO
- validaCert(key:string) {
-  console.log("horas: ", this.horas);
-  console.log("msg: ", this.msgObs);
-  console.log(key);
-  this.firebaseService.validaCert(this.horas, key, this.msgObs)
-  .then(() => {
-   // this.firebaseService.updateAluno(this.aluno,this.horas);
-    this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
-  })
-  .catch((e) => {
-    this.toast.create({ message: 'Erro ao validar certificado. É necessário inserir a quantidades de horas e observação!', duration: 3000 }).present();
-    console.error(e);
-  });
-}
+    var dataVal = dia + "/" + mes + "/" + ano;
+    return dataVal;
+  }*/
+
+
+  // valida certificado atribuindo horas, FALTA ATRIBUIR A DATA DE AVALIACAO
+  validaCert(key: string) {
+
+    if (this.horas == null) {
+      this.toast.create({ message: 'É necessário inserir a quantidade de horas para validar um certificado!', duration: 3000 }).present();
+    } else {
+      this.firebaseService.validaCert(key, this.horas, this.msgObs, this.firebaseService.pegaData())
+        .then(() => {
+          // this.firebaseService.updateAluno(this.aluno,this.horas);
+          this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
+        })
+        .catch((e) => {
+          this.toast.create({ message: 'Erro ao validar certificado. É necessário inserir a quantidades de horas e observação!', duration: 3000 }).present();
+          console.error(e);
+        });
+    }
+  }
 
   // altera status do certificado p recusado, FALTA ATRIBUIR A DATA DE AVALIACAO
   // altera status do certificado p recusado
   recusaCert(key: string) {
-    this.firebaseService.recusaCert(key, this.msgObs)
-      .then(() => {
-        this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
-      })
-      .catch((e) => {
-        this.toast.create({ message: 'Erro ao validar certificado.', duration: 3000 }).present();
-        console.error(e);
-      });
+    if (this.msgObs == null) {
+      this.toast.create({ message: 'É necessário inserir uma mensagem para recusar um certificado!', duration: 3000 }).present();
+    } else {
+      this.firebaseService.recusaCert(key, this.msgObs, this.firebaseService.pegaData())
+        .then(() => {
+          this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
+        })
+        .catch((e) => {
+          this.toast.create({ message: 'Erro ao validar certificado.', duration: 3000 }).present();
+          console.error(e);
+        });
     }
+  }
+
+  logoutProf(): void {
+    this.navCtrl.push(LoginPage);
+  }
 }

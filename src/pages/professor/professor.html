@@ -85,7 +85,8 @@
                     <ng-template #histRecusado>
                       <ion-icon title="Recusado" class="ion-md-close-circle"></ion-icon>
                     </ng-template>
-                    <p class="textWeb">&nbsp;{{certificados.categoria}}</p>
+                    <p class="textWeb" showWhen="landscape">&nbsp;{{certificados.categoria}}</p>
+                    <p class="textMobile" showWhen="android,ios" text-wrap>&nbsp;{{certificados.categoria}}</p>
                   </ion-row>
                 </ion-label>
               </ion-item>
@@ -106,39 +107,41 @@
               <ion-list>
                 <ion-item *ngFor="let certificado of certVal | async ">
                     <ion-row>
+                      <!-- Certificados Pendentes -->
                       <div *ngIf="certificado.status == 'pendente', then maniPendente"></div>
                         <ng-template #maniPendente>
                           <ion-row>
+                            <!-- Campo Horas -->
                             <ion-col col-12>
                               <ion-item>
-                               <ion-input type="number" min="1" max="99999" [(ngModel)]="horas" placeholder="Horas:">
+                               <ion-input type="number" min="1" max="100" name="horas" [(ngModel)]="horas" placeholder="Horas:">
                                </ion-input>
                               </ion-item>
                              </ion-col>
                           </ion-row>
-
+                          <!-- Campo Observação -->
                           <ion-col col-12>
                             <ion-row>
                               <ion-item>
-                              <ion-textarea rows="5" placeholder="Observação" [(ngModel)]="msgObs" >
+                              <ion-textarea rows="5" placeholder="Observação" [(ngModel)]="msgObs">
                               </ion-textarea>
                               </ion-item>
                             </ion-row>
                           </ion-col>
 
-                          <!-- Ações do Certificado -->
+                          <!-- PDF e Data -->
                           <ion-col col-12>
                             <ion-row justify-content-initial>
                               <!-- Versão Web -->
                               <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                               <!-- Versão Mobile -->
-                              <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openPDF(certificado.url)" showWhen="android,ios"/>
-                              <p class="textWeb">&nbsp; Data de Envio: &nbsp;</p>
+                              <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
+                              <p class="textWeb">&nbsp; Data de Envio: &nbsp;{{certificado.dataEnvio}}</p>
                             </ion-row>
 
                             <ion-row justify-content-end>
-                                <button ion-button color="anhembiColor" (click)="validaCert(certificado.key)">Validar</button>
-                                <button ion-button color="danger"(click)="recusaCert(certificado.key)">Recusar</button>
+                                <button ion-button color="anhembiColor" (click)="validaCert(certificado.key)" >Validar</button>
+                                <button ion-button color="danger"(click)="recusaCert(certificado.key)" >Recusar</button>
                             </ion-row>
                           </ion-col>
                         </ng-template>
@@ -146,14 +149,15 @@
                         <!-- Certificados Aprovados -->
                         <div *ngIf="certificado.status == 'validado', then infoValidado"></div>
                         <ng-template #infoValidado>
-                            <!-- Versão Mobile -->
-                            <ion-col showWhen="android,ios">
+                            <ion-col>
                               <ion-item>
-                               <ion-row justify-content-between>
-                                 <ion-col col-4>
-                                  <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)"/>
-                                 </ion-col>
-                                <p class="textWeb">{{certificado.horasValidadas}}&nbsp;Horas validadas</p>
+                                <ion-row justify-content-center>
+                                  <!-- Versão Web -->
+                                  <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
+                                  <!-- Versão Mobile -->
+                                  <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
+                                  <p class="textWeb">{{certificado.horasValidadas}}&nbsp;Horas validadas</p>
+                                  <p class="textWeb">&nbsp; Avaliado em: &nbsp;{{certificado.dataAvalicao}}</p>
                               </ion-row>
                               </ion-item>
                             </ion-col>
@@ -161,14 +165,15 @@
 
                         <div *ngIf="certificado.status == 'recusado', then infoRecusado"></div>
                         <ng-template #infoRecusado>
-                            <!-- Versão Mobile -->
-                            <ion-col showWhen="android,ios">
+                            <ion-col>
                                 <ion-item>
-                                 <ion-row justify-content-between>
-                                   <ion-col col-4>
-                                    <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)"/>
-                                   </ion-col>
-                                  <p class="textWeb">Horas Recusadas</p>
+                                  <ion-row justify-content-center>
+                                    <!-- Versão Web -->
+                                    <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
+                                    <!-- Versão Mobile -->
+                                    <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
+
+                                    <p class="textWeb">&nbsp; Avaliado em: &nbsp;{{certificado.dataAvalicao}}</p>
                                 </ion-row>
                                 </ion-item>
                               </ion-col>
