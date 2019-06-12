@@ -130,7 +130,7 @@ export class ProfessorPage {
   // altera status do certificado p recusado, FALTA ATRIBUIR A DATA DE AVALIACAO
   // altera status do certificado p recusado
   recusaCert(key: string) {
-    this.firebaseService.recusaCert(key, this.msgObs)
+    this.firebaseService.recusaCert(key, this.msgObs, this.dataConv)
       .then(() => {
         this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
       })

@@ -136,7 +136,7 @@
                               <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                               <!-- Versão Mobile -->
                               <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                              <p class="textWeb">&nbsp; Data de Envio: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                              <p class="textWeb">&nbsp; Data de Envio: {{certificado.dataEnvio| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                             </ion-row>
 
                             <ion-row justify-content-end>
@@ -156,7 +156,7 @@
                                   <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                                   <!-- Versão Mobile -->
                                   <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                                  <p class="textWeb">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                  <p class="textWeb">&nbsp;Data de Aprovação: {{certificado.dataAvalia| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                               </ion-row>
                               </ion-item>
                             </ion-col>
@@ -171,7 +171,7 @@
                                     <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                                     <!-- Versão Mobile -->
                                     <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                                    <p class="textWeb">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                    <p class="textWeb">&nbsp;Data de Reprovação: {{certificado.dataAvalia| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                                 </ion-row>
                                 </ion-item>
                               </ion-col>

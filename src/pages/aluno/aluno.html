@@ -71,7 +71,7 @@
                             <p class="textHoras" text-center>Horas Validadas: {{soma}}</p>
                           </ion-col>
                           <ion-col col-xl-4 col-xs-12>
-                            <p class="textHoras" text-center>Concluido: {{(soma / item.horasTotais )*100}}%</p>
+                            <p class="textHoras" text-center>Concluido: {{((soma / item.horasTotais )*100).toPrecision(2)}}%</p>
                           </ion-col>
                           <ion-col col-xl-4 col-xs-12>
                             <p class="textHoras" text-center>Horas Requeridas: {{item.horasTotais}}</p>

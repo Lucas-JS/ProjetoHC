@@ -49,6 +49,7 @@ export class FirebaseProvider {
     })
   }
 
+
   getLogin(userEmail,tipo){
     if(tipo=="aluno"){
       return this.db.list(this.PATH, ref => ref.orderByChild('email').equalTo(userEmail))
@@ -159,12 +160,12 @@ export class FirebaseProvider {
         if (certificado.key) {
           // atualizando pela lista
           this.db.list(this.PATH4)
-            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, data:certificado.data})
+            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, dataEnvio:certificado.dataEnvio})
             .then(() => resolve())
             .catch((e) => reject(e));
         } else {
           this.db.list(this.PATH4)
-            .push({categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, data:certificado.data})
+            .push({categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, dataEnvio:certificado.dataEnvio})
             .then(() => resolve());
         }
       })
@@ -184,17 +185,17 @@ export class FirebaseProvider {
     return new Promise((resolve, reject) => {
       //atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({horasValidadas: Number(horas), status: 'validado', observacao: msgObs, data:dataConv})
+        .update({horasValidadas: Number(horas), status: 'validado', observacao: msgObs, dataAvalia:dataConv})
         .then(() => resolve())
         .catch((e) => reject(e));
     })
   }
 
-  recusaCert(key:string, msgObs:string){
+  recusaCert(key:string, msgObs:string, dataConv:string){
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({status: 'recusado', observacao: msgObs })
+        .update({status: 'recusado', observacao: msgObs, dataAvalia:dataConv })
         .then(() => resolve())
         .catch((e) => reject(e));
     })

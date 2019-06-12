@@ -94,16 +94,19 @@
                             <div *ngIf="certificados.status == 'recusado', then histRecusado"></div>
                             <ng-template #histPendente>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <p class="textWeb">&nbsp;Data envio: 12/6/2019&nbsp;</p>
                                 <ion-icon title="Pendente" class="ion-md-alert">&nbsp;</ion-icon>
                                 <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
                             </ng-template>
                             <ng-template #histValidado>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <p class="textWeb">&nbsp;Data avaliação: 12/06/2019&nbsp;</p>
                                 <ion-icon title="Validado" class="ion-md-checkmark-circle">&nbsp;</ion-icon>
                                 <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
                             </ng-template>
                             <ng-template #histRecusado>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
+                                <p class="textWeb">&nbsp;Data avaliação: 12/06/2019&nbsp;</p>
                                 <ion-icon title="Recusado" class="ion-md-close-circle">&nbsp;</ion-icon>
                                 <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
                             </ng-template>

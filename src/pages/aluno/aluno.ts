@@ -61,10 +61,13 @@ export class AlunoPage{
       this.contConv = a[this.contConv].horasValidadas;
       this.soma = this.soma+Number(this.contConv);
     }this.somaLocal(this.soma);});
+
+    (this.soma);
+
   }
 
   //Torna possível guardar o valor da soma
-  somaLocal(soma){
+  somaLocal(soma):void{
     this.soma = soma;
     console.log(this.soma);
   }

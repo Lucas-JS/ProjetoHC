@@ -105,7 +105,7 @@ export class GrupoPage {
           horasValidadas: 0,
           ra: this.firebaseService.getRA(), //MacGyver approves
           url: url,
-          data: this.dataConv
+          dataEnvio: this.dataConv
         }
         // salva objeto certificado na coleção
         this.firebaseService.saveCert(certificadoJson);
