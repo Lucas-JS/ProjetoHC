@@ -136,12 +136,12 @@
                               <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                               <!-- Versão Mobile -->
                               <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                              <p class="textWeb">&nbsp; Data de Envio: &nbsp;{{certificado.dataEnvio}}</p>
+                              <p class="textWeb">&nbsp; Data de Envio: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                             </ion-row>
 
                             <ion-row justify-content-end>
-                                <button ion-button color="anhembiColor" (click)="validaCert(certificado.key)" >Validar</button>
-                                <button ion-button color="danger"(click)="recusaCert(certificado.key)" >Recusar</button>
+                                <button ion-button color="anhembiColor" (click)="validaCert(certificado.key)" [disabled]="horas && msgObs? false:true">Validar</button>
+                                <button ion-button color="danger"(click)="recusaCert(certificado.key)" [disabled]="horas && msgObs? false:true">Recusar</button>
                             </ion-row>
                           </ion-col>
                         </ng-template>
@@ -156,8 +156,7 @@
                                   <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                                   <!-- Versão Mobile -->
                                   <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                                  <p class="textWeb">{{certificado.horasValidadas}}&nbsp;Horas validadas</p>
-                                  <p class="textWeb">&nbsp; Avaliado em: &nbsp;{{certificado.dataAvalicao}}</p>
+                                  <p class="textWeb">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                               </ion-row>
                               </ion-item>
                             </ion-col>
@@ -172,8 +171,7 @@
                                     <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                                     <!-- Versão Mobile -->
                                     <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-
-                                    <p class="textWeb">&nbsp; Avaliado em: &nbsp;{{certificado.dataAvalicao}}</p>
+                                    <p class="textWeb">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                                 </ion-row>
                                 </ion-item>
                               </ion-col>

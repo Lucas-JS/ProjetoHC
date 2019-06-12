@@ -1,7 +1,8 @@
 export interface Certificado{
   categoria: string;
   status: string;
-  horasValidadas:number;
+  horasValidadas:string;
   ra:string;
   url:string;
+  data:Date;
 }

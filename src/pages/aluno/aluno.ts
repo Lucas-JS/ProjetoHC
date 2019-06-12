@@ -18,20 +18,26 @@ import { LoginPage } from '../login/login';
 export class AlunoPage{
   //Objeto que escuta os dados no banco
   aluno:Observable<any>;
+  certificado:Observable<any>;
   //Barra de Progresso
   uploadProgress;
   urlWeb:string;
   //RA Aluno para busca
   raAluno:string;
+  //Soma valores
+  soma:number=0;
+  contConv:string;
+  raVar:number;
 
   constructor(public menuctrl:MenuController,public navCtrl: NavController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public firebaseService:FirebaseProvider, public menu:MenuController) {
     //Captura os dados do login para manipular no FormAluno
     this.aluno = navParams.get('ColAluno');
     //Passa os dados para o provider para guardar valores globalmente
     this.firebaseService.setAluno(this.aluno);
-    this.aluno.subscribe(a=>console.log(a));
     //Torna as informações do aluno Global
     this.tempAluno();
+    this.aluno.subscribe(a=>this.raTemp(a["0"].ra));
+
     this.menu.enable(true);
   }
 
@@ -44,6 +50,27 @@ export class AlunoPage{
   envRA(){
     return this.raAluno;
   }
+
+ // busca certificados do aluno e atualiza soma de horas cadastradas
+  raTemp(ra):void{
+    this.raVar = ra;
+
+    this.certificado = this.firebaseService.getCertificadoAluno(this.raVar);
+    this.certificado.subscribe(a=>{for(let cont=0;cont<a.length;cont++){
+      this.contConv = cont.toString();
+      this.contConv = a[this.contConv].horasValidadas;
+      this.soma = this.soma+Number(this.contConv);
+    }this.somaLocal(this.soma);});
+  }
+
+  //Torna possível guardar o valor da soma
+  somaLocal(soma){
+    this.soma = soma;
+    console.log(this.soma);
+  }
+
+
+
 
   //Abre PDF para dispositivos Móveis
   openMobPDF(tipoArquivo:string):void{
@@ -86,5 +113,4 @@ export class AlunoPage{
     this.navCtrl.setRoot(LoginPage);
   }
 }
-
 

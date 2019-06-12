@@ -63,11 +63,6 @@
   background-color: #1E90FF;
   }
 
-  /*Estilização da inserção de Horas*/
-  .inHoras{
-    vertical-align: middle;
-  }
-
   //Menu Web
   p.textWebMenu{
     font-size:16px;
@@ -204,7 +199,14 @@
 
   /*Estilização do icone do PDF*/
   .tamIconPDF{
-    width: 25%;
+    width:10%;
+    height:2%;
+  }
+
+  /*Estilização do icone do PDF*/
+  .tamIconPDFMobile{
+    width: 15%;
+    height:4%;
   }
 
   /*Estilização do icone da Situação Certificado*/
@@ -221,6 +223,10 @@
     font-weight: bold;
   }
 
+  //Deixa caixa de filtro do curso verde
+  .inputCurso{
+    color:#01AB8E;
+  }
 
   textarea{
     -moz-user-select: text;
@@ -235,11 +241,10 @@
     font-size:1.5em;
   }
 
-  .ion-ios-checkmark-circle{
-    color: #01AB8E !important;
+  .ion-md-chatbubbles{
+    color:#CDC9A5;
     font-size:1.5em;
   }
-
   .ion-md-alert{
     color: yellow !important;
     font-size:1.5em;
@@ -255,5 +260,4 @@
   .ion-ios-close-circle{
     color: red !important;
     font-size:1.5em;
-
   }
