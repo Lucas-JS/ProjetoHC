@@ -71,10 +71,10 @@
                             <p class="textHoras" text-center>Horas Validadas: {{soma}}</p>
                           </ion-col>
                           <ion-col col-xl-4 col-xs-12>
-                            <p class="textHoras" text-center>Concluido: {{((soma / item.horasTotais )*100).toPrecision(2)}}%</p>
+                            <p class="textHoras" text-center>Horas Restantes: {{item.horasTotais-soma}}</p>
                           </ion-col>
                           <ion-col col-xl-4 col-xs-12>
-                            <p class="textHoras" text-center>Horas Requeridas: {{item.horasTotais}}</p>
+                            <p class="textHoras" text-center>Horas Totais: {{item.horasTotais}}</p>
                           </ion-col>
                       </ion-row>
                       </div>
@@ -85,14 +85,16 @@
             <!-- Executa apenas nos dispositivos móveis -->
             <ion-row justify-content-start showWhen="android,ios">
               <ion-col col-lg-2>
-                <ion-item button (click)="openMobPDF('Regulamento')" color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Regulamento</p>
-                </ion-item>
+                <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fregulamento.pdf?alt=media&token=e2bbcab6-c976-4ac7-9b32-04ffa7667cf5" target="blank">
+                <button color=".corDoc" text-center>
+                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Regulamento</p>
+                </button></a>
               </ion-col>
               <ion-col col-lg-2>
-               <ion-item button (click)="openMobPDF('Manual')" color=".corDoc" text-center>
-                <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Manual</p>
-                </ion-item>
+                <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fmanual.pdf?alt=media&token=c7da9e9e-4184-43ff-a80f-87a49736b9e9" target="blank">
+                <button color=".corDoc" text-center>
+                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Manuais</p>
+                </button></a>
               </ion-col>
             </ion-row>
 
@@ -100,12 +102,12 @@
             <ion-row justify-content-end showWhen="landscape">
               <ion-col col-lg-1>
                 <ion-item button (click)="openPDF('Regulamento')" color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Regulamento</p>
+                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Regulamento</p>
                 </ion-item>
               </ion-col>
               <ion-col col-lg-1>
                <ion-item button (click)="openPDF('Manual')" color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDF"/><p class="textFile">Manual</p>
+                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Manual</p>
                </ion-item>
               </ion-col>
             </ion-row>

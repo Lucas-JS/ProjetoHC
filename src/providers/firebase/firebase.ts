@@ -17,7 +17,6 @@ export class FirebaseProvider {
   raAluno:string;
   aluno:Observable<any>;
   retAluno:Observable<any>;
-
   teste:Observable<any>;
 
   constructor(public db:AngularFireDatabase, public firebaseApp: FirebaseApp,
@@ -41,14 +40,14 @@ export class FirebaseProvider {
   }
 
    //teste
-   getHorasAluno(ra) {
+   getHorasAluno(ra:string) {
+    console.log(" "+ra);
     return this.db.list(this.PATH4, ref => ref.orderByChild('ra').equalTo(ra))
         .snapshotChanges()
         .map(changes => {
           return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
     })
   }
-
 
   getLogin(userEmail,tipo){
     if(tipo=="aluno"){
@@ -160,12 +159,12 @@ export class FirebaseProvider {
         if (certificado.key) {
           // atualizando pela lista
           this.db.list(this.PATH4)
-            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, dataEnvio:certificado.dataEnvio})
+            .update(certificado.key, { categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, data:certificado.data})
             .then(() => resolve())
             .catch((e) => reject(e));
         } else {
           this.db.list(this.PATH4)
-            .push({categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, dataEnvio:certificado.dataEnvio})
+            .push({categoria: certificado.categoria, status:certificado.status,horasValidadas:certificado.horasValidadas,ra: certificado.ra, url: certificado.url, data:certificado.data})
             .then(() => resolve());
         }
       })
@@ -181,23 +180,33 @@ export class FirebaseProvider {
   }
 
   //Valida certificado
-  validaCert(horas: number, key: string, msgObs:string, dataConv:string) {
+  validaCert(horas: number, key: string, msgObs:string) {
     return new Promise((resolve, reject) => {
       //atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({horasValidadas: Number(horas), status: 'validado', observacao: msgObs, dataAvalia:dataConv})
+        .update({horasValidadas: Number(horas), status: 'validado', observacao: msgObs, data:this.dataAtual()})
         .then(() => resolve())
         .catch((e) => reject(e));
     })
   }
 
-  recusaCert(key:string, msgObs:string, dataConv:string){
+  recusaCert(key:string, msgObs:string){
     return new Promise((resolve, reject) => {
       // atualizando pelo objeto
       this.db.object(this.PATH4 + key)
-        .update({status: 'recusado', observacao: msgObs, dataAvalia:dataConv })
+        .update({status: 'recusado', observacao: msgObs, data: this.dataAtual()})
         .then(() => resolve())
         .catch((e) => reject(e));
     })
+  }
+
+  //Captura data atual para fazer o update
+  dataAtual(){
+    let data = new Date()
+    let dataConv:string;
+    data.getDate();
+    data.getMonth();
+    data.getFullYear();
+    return dataConv = data.toString();
   }
 }

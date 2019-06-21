@@ -27,7 +27,6 @@ export class AlunoPage{
   //Soma valores
   soma:number=0;
   contConv:string;
-  raVar:number;
 
   constructor(public menuctrl:MenuController,public navCtrl: NavController,public navParams: NavParams,public docs:DocumentViewer,public filetransfer:FileTransfer, public file:File, public platfotm:Platform, public app:InAppBrowser, public firebaseService:FirebaseProvider, public menu:MenuController) {
     //Captura os dados do login para manipular no FormAluno
@@ -36,9 +35,24 @@ export class AlunoPage{
     this.firebaseService.setAluno(this.aluno);
     //Torna as informações do aluno Global
     this.tempAluno();
-    this.aluno.subscribe(a=>this.raTemp(a["0"].ra));
-
+    this.aluno.subscribe(a=>{this.raTemp(a["0"].ra)});
+    //Habilita Menu
     this.menu.enable(true);
+  }
+
+  //Torna possível guardar o valor da soma
+  somaLocal(soma){
+    this.soma = soma;
+  }
+
+  raTemp(ra):void{
+    //Certificado
+    this.certificado = this.firebaseService.getHorasAluno(ra);
+    this.certificado.subscribe(a=>{for(let cont=0;cont<a.length;cont++){
+      this.contConv = cont.toString();
+      this.contConv = a[this.contConv].horasValidadas;
+      this.soma = this.soma+Number(this.contConv);
+    }this.somaLocal(this.soma);});
   }
 
   //Verifica o RA do aluno para buscar certificados
@@ -50,30 +64,6 @@ export class AlunoPage{
   envRA(){
     return this.raAluno;
   }
-
- // busca certificados do aluno e atualiza soma de horas cadastradas
-  raTemp(ra):void{
-    this.raVar = ra;
-
-    this.certificado = this.firebaseService.getCertificadoAluno(this.raVar);
-    this.certificado.subscribe(a=>{for(let cont=0;cont<a.length;cont++){
-      this.contConv = cont.toString();
-      this.contConv = a[this.contConv].horasValidadas;
-      this.soma = this.soma+Number(this.contConv);
-    }this.somaLocal(this.soma);});
-
-    (this.soma);
-
-  }
-
-  //Torna possível guardar o valor da soma
-  somaLocal(soma):void{
-    this.soma = soma;
-    console.log(this.soma);
-  }
-
-
-
 
   //Abre PDF para dispositivos Móveis
   openMobPDF(tipoArquivo:string):void{
@@ -116,4 +106,5 @@ export class AlunoPage{
     this.navCtrl.setRoot(LoginPage);
   }
 }
+
 

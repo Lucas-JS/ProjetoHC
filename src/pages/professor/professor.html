@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="anhembiColor" hideBackButton>
     <!-- Título -->
-    <ion-title>Gerenciamento de Atividades Complementares</ion-title>
+    <ion-title class="textWeb">Minha Área</ion-title>
     <ion-buttons end>
       <button ion-button icon-only title="Sair" (click)="logoutProf()">
         <ion-icon name="power"></ion-icon>
@@ -135,8 +135,11 @@
                               <!-- Versão Web -->
                               <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                               <!-- Versão Mobile -->
-                              <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                              <p class="textWeb">&nbsp; Data de Envio: {{certificado.dataEnvio| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                <a href="{{certificado.url}}" target="blank">
+                                  <button color=".corDoc" text-center showWhen="android,ios">
+                                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
+                                </button></a>
+                              <p class="textWeb" text-wrap>&nbsp; Data de Envio: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                             </ion-row>
 
                             <ion-row justify-content-end>
@@ -154,9 +157,13 @@
                                 <ion-row justify-content-center>
                                   <!-- Versão Web -->
                                   <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
-                                  <!-- Versão Mobile -->
-                                  <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                                  <p class="textWeb">&nbsp;Data de Aprovação: {{certificado.dataAvalia| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                    <!-- Versão Mobile -->
+                                    <a href="{{certificado.url}}" target="blank">
+                                      <button color=".corDoc" text-center showWhen="android,ios">
+                                        <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
+                                      </button></a>
+                                  <p class="textWeb" showWhen="landscape">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                  <p class="textMobile" showWhen="android,ios">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy'}}</p>
                               </ion-row>
                               </ion-item>
                             </ion-col>
@@ -170,8 +177,12 @@
                                     <!-- Versão Web -->
                                     <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
                                     <!-- Versão Mobile -->
-                                    <img src="../assets/pdf.ico" class="tamIconPDFMobile" (click)="openMobPDF(certificado.url)" showWhen="android,ios"/>
-                                    <p class="textWeb">&nbsp;Data de Reprovação: {{certificado.dataAvalia| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                    <a href="{{certificado.url}}" target="blank">
+                                      <button color=".corDoc" text-center showWhen="android,ios">
+                                        <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
+                                      </button></a>
+                                    <p class="textWeb" showWhen="landscape">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                    <p class="textMobile" showWhen="android,ios">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy'}}</p>
                                 </ion-row>
                                 </ion-item>
                               </ion-col>

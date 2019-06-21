@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController, Item } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseApp } from 'angularfire2';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
@@ -10,7 +10,6 @@ import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { LoginPage } from '../login/login';
 import { AlunoPage } from '../aluno/aluno';
 import moment from 'moment';
-import { iterateListLike } from '@angular/core/src/change_detection/change_detection_util';
 
 
 @IonicPage()
@@ -23,7 +22,6 @@ export class GrupoPage {
   atividade: Observable<any>;
   public cor:string;
   selected: boolean = true;
-
   referencia;
   arquivo;
   //Pega valor da atividade selecionada pelo Select em tempo real
@@ -43,6 +41,10 @@ export class GrupoPage {
   data = new Date();
   //Converte Data
   dataConv:string;
+  teste:Observable<any>;
+  nomeCatGlobal=[];
+  horasCatGlobal=[];
+
 
   constructor(public firebaseService:FirebaseProvider,public navCtrl: NavController,
     public navParams: NavParams, public docs:DocumentViewer, public file:File, public filetransfer:FileTransfer, public app:InAppBrowser, public platform:Platform, @Inject(FirebaseApp) fb: any, public msgToastController:ToastController) {
@@ -53,12 +55,13 @@ export class GrupoPage {
     this.referencia = fb.storage().ref();
     //Busca certificados pelo RA do aluno
     this.getCertificado(this.firebaseService.getRA());
+    this.verifAtividades(this.atividade);
   }
 
   mudaCor(ativ:string){
     this.ativ=ativ;
-    this.selected = false;
-    this.arquivo = "";
+    this.selected=false;
+    this.arquivo= "";
     return this.cor = "anhembiColor";
   }
 
@@ -72,7 +75,6 @@ export class GrupoPage {
 
   atualizaArquivo(event):void{
     //Atualiza informação de acordo com a opção selecionada em tempo real
-
     this.arquivo = event.srcElement.files[0];
   }
 
@@ -105,7 +107,7 @@ export class GrupoPage {
           horasValidadas: 0,
           ra: this.firebaseService.getRA(), //MacGyver approves
           url: url,
-          dataEnvio: this.dataConv
+          data: this.dataConv
         }
         // salva objeto certificado na coleção
         this.firebaseService.saveCert(certificadoJson);
@@ -115,9 +117,8 @@ export class GrupoPage {
       console.log('falta arquivo',error);
       this.msgToastController.create({ message: 'Erro ao inserir certificado, certifique-se de inserir arquivo!', duration: 5000 }).present();
     };
-
+    //Desabilitar botão de enviar
     this.selected = true;
-
  }
 
   baixarArquivo(nome: string){
@@ -145,6 +146,57 @@ export class GrupoPage {
   //Busca certificado no Provider
   getCertificado(ra): void {
     this.certificado = this.firebaseService.getCertificadoAluno(ra);
+  }
+
+  //Atribui valores do banco para array loais
+  verifAtividades(ativ:any){
+    let contConv;
+    let ativLocal:Observable<any> = ativ;
+    //Nome e categoria das atividades locais
+    let horasCat=[];
+    let nomeCat=[];
+    ativLocal.subscribe(a=>{for(let cont=0;cont<a.length;cont++){
+      //Popula array de nome e horas
+      contConv = cont.toString();
+      nomeCat[cont] = a[contConv].nome;
+      horasCat[cont] = a[cont].horasCadastradas;
+  }this.populaAtividades(nomeCat,horasCat)});
+  }
+
+  //Método auxiliar para popular variáveis
+  populaAtividades(nomeCat,horasCat){
+    let contConv;
+    //Looping para popular atividades globais
+    for(let cont=0;cont<nomeCat.length;cont++){
+      this.nomeCatGlobal[cont] = nomeCat[cont];
+      this.horasCatGlobal[cont] = horasCat[cont];
+    }
+
+    this.certificado = this.firebaseService.getCertificadoAluno(this.firebaseService.getRA());
+    this.certificado.subscribe(a=>{for(let cont=0;cont<a.length;cont++){
+    contConv = cont.toString();
+    //Soma as horas apenas das horas cadastradas em determinada atividade
+    for(let cont2=0;cont2<this.nomeCatGlobal.length;cont2++){
+      if(a[contConv].categoria == this.nomeCatGlobal[cont2]){
+        this.horasCatGlobal[cont2] += Number(a[contConv].horasValidadas);
+      }
+    }}})
+  }
+
+  limitador(ch){
+    if(ch>=0){
+      return false;
+    }else{return true};
+  }
+
+  seqAtiv(categoria){
+    for(let cont=0;cont<this.nomeCatGlobal.length;cont++){
+      if(categoria==this.nomeCatGlobal[cont]){
+        console.log(this.horasCatGlobal[cont]);
+        return this.horasCatGlobal[cont];
+      }
+    }
+    return null;
   }
 
   //Abrir arquivos PDF Mobile

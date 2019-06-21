@@ -33,8 +33,7 @@ export class ProfessorPage {
   corFixa:string = "anhembiColor";
   selectCor:boolean;
   teste: Observable<any>;
-  data = new Date();
-  dataConv:string;
+
 
 
   constructor(
@@ -61,14 +60,6 @@ export class ProfessorPage {
   //Verifica opção do curso
   optCurso(optCurso:string):void{
    this.curso = optCurso;
-  }
-
-  //Captura data atual para fazer o update
-  dataAtual(){
-    this.data.getDate();
-    this.data.getMonth();
-    this.data.getFullYear();
-    this.dataConv = this.data.toString();
   }
 
   // busca somente o certificado expecífico
@@ -115,9 +106,7 @@ export class ProfessorPage {
 
  // valida certificado atribuindo horas, FALTA ATRIBUIR A DATA DE AVALIACAO
  validaCert(key:string) {
-  //executa método para pegar data
-  this.dataAtual();
-  this.firebaseService.validaCert(this.horas, key, this.msgObs, this.dataConv)
+  this.firebaseService.validaCert(this.horas, key, this.msgObs)
   .then(() => {
     this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
   })
@@ -130,7 +119,7 @@ export class ProfessorPage {
   // altera status do certificado p recusado, FALTA ATRIBUIR A DATA DE AVALIACAO
   // altera status do certificado p recusado
   recusaCert(key: string) {
-    this.firebaseService.recusaCert(key, this.msgObs, this.dataConv)
+    this.firebaseService.recusaCert(key, this.msgObs)
       .then(() => {
         this.toast.create({ message: 'Certificado avaliado com sucesso.', duration: 3000 }).present();
       })

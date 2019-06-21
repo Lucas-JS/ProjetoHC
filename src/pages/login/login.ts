@@ -17,7 +17,9 @@ import { Observable } from 'rxjs/Observable';
 export class LoginPage {
 
   loginForm:FormGroup;
-
+  //Splash
+  splash = true;
+  tabBarElement:any;
   user={} as User;
   tipo: string;
   //Cria uma referência da coleção de Aluno
@@ -37,7 +39,15 @@ export class LoginPage {
        senha: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
      });
 
+     //Splash
+     this.tabBarElement = document.querySelector('.tabbar');
   this.menu.enable(false);
+  }
+
+  ionViewDidLoad(){
+    setTimeout(()=>{
+      this.splash = false;
+    },4000);
   }
 
   //Método de autentificação de Login

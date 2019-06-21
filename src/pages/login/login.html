@@ -1,4 +1,4 @@
-    <ion-row>
+<ion-row>
           <!-- Div imagem da esquerda-->
           <div class="planFundoLogin" hideWhen="!landscape,android,ios" col-lg-8 col-md-6 col-sm-3></div>
           <!-- Div formulário da direita-->
@@ -15,12 +15,12 @@
                       <!-- E-mail -->
                       <ion-item>
                         <ion-label floating>E-mail Institucional:</ion-label>
-                        <ion-input type="text" formControlName="email" value="20881190@anhembi.com.br" spellcheck="false" [(ngModel)]="user.email"></ion-input>
+                        <ion-input type="text" formControlName="email" value="@anhembi.com.br" spellcheck="false" [(ngModel)]="user.email"></ion-input>
                       </ion-item>
                       <!-- Senha -->
                       <ion-item>
                         <ion-label floating>Senha:</ion-label>
-                        <ion-input type="password" formControlName="senha" [(ngModel)]="user.senha" value="12345678"></ion-input>
+                        <ion-input type="password" formControlName="senha" [(ngModel)]="user.senha"></ion-input>
                       </ion-item>
                       <!-- Enviar Info -->
                       <ion-item>

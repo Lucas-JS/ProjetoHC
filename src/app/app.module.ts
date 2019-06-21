@@ -9,7 +9,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { File } from '@ionic-native/file';
 import { FileTransfer} from '@ionic-native/file-transfer';
@@ -70,7 +69,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   ],
   providers: [
     StatusBar,
-    SplashScreen,
     File,FileTransfer,DocumentViewer,InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseProvider

@@ -29,7 +29,7 @@
               <!-- Conteúdo pai das tabelas-->
               <ion-row>
                 <!-- Tabela Cadastrado de Atividades -->
-                <ion-col col-xl-8 col-sm-12>
+                <ion-col col-xl-6 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-between>
                         <p class="textWeb">ATIVIDADES</p>
@@ -39,16 +39,16 @@
 
               <ion-list radio-group>
                   <ion-item *ngFor= "let item of atividade|async">
-                      <ion-radio (ionSelect)="mudaCor(item.nome)" [color]="cor"></ion-radio>
+                      <ion-radio (ionSelect)="mudaCor(item.nome)" [color]="cor" [disabled]="limitador(item.horasTotais-seqAtiv(item.nome))"></ion-radio>
                       <ion-label showWhen="landscape" text-initial><p class="textWeb" >{{item.nome}}</p></ion-label>
-                      <ion-label showWhen="landscape" text-end><p class="textWeb" >{{item.horasTotais}}</p></ion-label>
+                      <ion-label showWhen="landscape" text-end><p class="textWeb" >{{item.horasTotais-seqAtiv(item.nome)}}</p></ion-label>
                       <ion-label showWhen="android,ios">
                           <ion-row>
                           <ion-col col-10 text-wrap>
-                           <p class="textMobile" text-initial>{{item.nome}}</p>
+                           <p class="textWeb" text-initial>{{item.nome}}</p>
                           </ion-col>
                           <ion-col col-2>
-                           <p class="textMobile"text-end>{{item.horasTotais}}</p>
+                           <p class="textWeb" text-end>{{item.horasTotais-seqAtiv(item.nome)}}</p>
                           </ion-col>
                          </ion-row>
                       </ion-label>
@@ -57,35 +57,18 @@
                 </ion-col>
 
                 <!-- Tabela Histórico dos Certificados -->
-                <ion-col col-xl-4 col-sm-12>
+                <ion-col col-xl-6 col-sm-12>
                   <ion-item color="anhembiColor">
                     <ion-row justify-content-center>
                         <p class="textWeb">SITUAÇÃO CERTIFICADOS</p>
                     </ion-row>
                   </ion-item>
 
-                  <!-- Lista Certificados Mobile -->
-                  <ion-item *ngFor="let certificados of certificado|async" (click)="openMobPDF(certificados.url)" showWhen="android,ios">
-                    <ion-row>
-                      <ion-col text-wrap>
-                       <p class="textMobile">{{certificados.categoria}}</p>
-                      </ion-col>
-                      <ion-row>
-                          <ion-col>
-                            <p class="textMobile">{{certificados.horasValidadas}} Hora(s)</p>
-                          </ion-col>
-                          <ion-col>
-                            <ion-icon name="{{certificados.status}}" color="pendente"></ion-icon>
-                         </ion-col>
-                      </ion-row>
-                    </ion-row>
-                  </ion-item>
-
                    <!-- Lista Certificados Web -->
-                  <ion-item *ngFor="let certificados of certificado|async" (click)="openPDF(certificados.url)" showWhen="landscape">
+                  <ion-item *ngFor="let certificados of certificado|async" (click)="openPDF(certificados.url)">
                       <ion-row>
                         <ion-col text-initial>
-                            <p class="textWeb">{{certificados.categoria}}</p>
+                            <p class="textWeb" text-wrap>{{certificados.categoria}}</p>
                         </ion-col>
 
                         <ion-row>
@@ -94,21 +77,21 @@
                             <div *ngIf="certificados.status == 'recusado', then histRecusado"></div>
                             <ng-template #histPendente>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
-                                <p class="textWeb">&nbsp;Data envio: 12/6/2019&nbsp;</p>
+                                <p class="textWeb" showWhen="landscape">- Envio em: {{certificados.data| date:'dd/MM/yyyy'}}&nbsp;</p>
                                 <ion-icon title="Pendente" class="ion-md-alert">&nbsp;</ion-icon>
-                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles" showWhen="landscape"></ion-icon>
                             </ng-template>
                             <ng-template #histValidado>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
-                                <p class="textWeb">&nbsp;Data avaliação: 12/06/2019&nbsp;</p>
+                                <p class="textWeb" showWhen="landscape">- Aprovado em: {{certificados.data| date:'dd/MM/yyyy'}}&nbsp;</p>
                                 <ion-icon title="Validado" class="ion-md-checkmark-circle">&nbsp;</ion-icon>
-                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles" showWhen="landscape"></ion-icon>
                             </ng-template>
                             <ng-template #histRecusado>
                                 <p class="textWeb">{{certificados.horasValidadas}} Hora(s)&nbsp;</p>
-                                <p class="textWeb">&nbsp;Data avaliação: 12/06/2019&nbsp;</p>
+                                <p class="textWeb" showWhen="landscape">- Recusado em: {{certificados.data| date:'dd/MM/yyyy'}}&nbsp;</p>
                                 <ion-icon title="Recusado" class="ion-md-close-circle">&nbsp;</ion-icon>
-                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles"></ion-icon>
+                                <ion-icon title="{{certificados.observacao}}" class="ion-md-chatbubbles" showWhen="landscape"></ion-icon>
                             </ng-template>
                       </ion-row>
                       </ion-row>

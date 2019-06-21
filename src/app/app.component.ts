@@ -1,8 +1,7 @@
 import { snapshotChanges } from 'angularfire2/database';
 import { Component, ViewChild} from '@angular/core';
-import { Nav, Platform, NavController } from 'ionic-angular';
+import { Nav, Platform, NavController, ShowWhen } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from './../pages/login/login';
 import { GrupoPage } from '../pages/grupo/grupo';
 
@@ -20,14 +19,13 @@ export class MyApp{
   //Cria coleção de páginas do Menu com os parâmetros necessários
   pages: Array<{title: string, component: any, raAluno:number}>;
 
-  constructor(public plataforma: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public plataforma: Platform, public statusBar: StatusBar) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.plataforma.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
     this.alunoMenu();
   }
