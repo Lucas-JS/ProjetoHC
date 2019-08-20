@@ -1,3 +1,5 @@
+import { SearchPipe } from './../pipes/search/search';
+import { SplashPage } from './../pages/splash/splash';
 import { GrupoPage } from './../pages/grupo/grupo';
 import { AlunoPage } from './../pages/aluno/aluno';
 import { ProfessorPage } from './../pages/professor/professor';
@@ -9,6 +11,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { File } from '@ionic-native/file';
 import { FileTransfer} from '@ionic-native/file-transfer';
@@ -35,6 +38,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     ProfessorPage,
     //Grupo de Atividades Declaradas
     GrupoPage,
+    SplashPage,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
       storageBucket: "projetohc-9700d.appspot.com",
       messagingSenderId: "819851179141"
     }),
-    HttpModule
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,13 +70,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     AlunoPage,
     ProfessorPage,
     //Grupo de Atividades Declaradas
-    GrupoPage
+    GrupoPage,
+    SplashPage
   ],
   providers: [
     StatusBar,
+    SplashScreen,
     File,FileTransfer,DocumentViewer,InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FirebaseProvider
+    FirebaseProvider,
+    SearchPipe,
   ]
 })
 export class AppModule {}

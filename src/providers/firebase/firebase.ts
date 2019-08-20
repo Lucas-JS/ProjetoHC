@@ -81,7 +81,25 @@ export class FirebaseProvider {
       })
   }
 
+   //Busca Aluno Pelo Curso
+  getAlunoSemestre(semestre) {
+    return this.db.list(this.PATH, ref => ref.orderByChild('semestre').equalTo(semestre))
+      .snapshotChanges()
+      .map(changes => {
+         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+  }
+
   //Busca Aluno Pelo Curso
+  getAlunoNome(nome) {
+    return this.db.list(this.PATH, ref => ref.orderByChild('nome').equalTo(nome))
+      .snapshotChanges()
+      .map(changes => {
+         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+  }
+
+  //Busca Aluno Pelo RA
    getAlunoRA(ra) {
     return this.db.list(this.PATH, ref => ref.orderByChild('ra').equalTo(ra))
       .snapshotChanges()
@@ -89,6 +107,16 @@ export class FirebaseProvider {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       })
   }
+
+  //Busca Aluno Pelo Campus/Semestre
+  getCampusSem(campusSemCur) {
+      return this.db.list(this.PATH, ref => ref.orderByChild('campusSemCur').equalTo(campusSemCur))
+        .snapshotChanges()
+        .map(changes => {
+          return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+        })
+  }
+
 
   //Busca Grupo Especifico No Banco
   getGrupo(grupo){

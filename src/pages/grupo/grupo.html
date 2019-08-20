@@ -18,7 +18,8 @@
     </ion-navbar>
   </ion-header>
 
-  <ion-content padding class="planFundo">
+  <ion-content class="planFundo">
+    <br>
     <br>
     <ion-grid col-12>
       <ion-row justify-content-center>
@@ -65,6 +66,7 @@
                   </ion-item>
 
                    <!-- Lista Certificados Web -->
+                  <ion-scroll scrollY="true" style="height:100%">
                   <ion-item *ngFor="let certificados of certificado|async" (click)="openPDF(certificados.url)">
                       <ion-row>
                         <ion-col text-initial>
@@ -96,7 +98,7 @@
                       </ion-row>
                       </ion-row>
                   </ion-item>
-
+                  </ion-scroll>
                  </ion-col>
                </ion-row>
                 <!-- 4 Linha dentro da div principal -->

@@ -14,7 +14,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="planFundo">
+<ion-content class="planFundo">
+<br>
 <ion-grid>
   <ion-row justify-content-center>
     <!-- Utiliza 12 Linhas de Colunas -->
@@ -82,33 +83,18 @@
               </ion-col>
             </ion-row>
 
-            <!-- Executa apenas nos dispositivos móveis -->
-            <ion-row justify-content-start showWhen="android,ios">
-              <ion-col col-lg-2>
-                <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fregulamento.pdf?alt=media&token=e2bbcab6-c976-4ac7-9b32-04ffa7667cf5" target="blank">
-                <button color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Regulamento</p>
-                </button></a>
-              </ion-col>
-              <ion-col col-lg-2>
-                <a href="https://firebasestorage.googleapis.com/v0/b/projetohc-9700d.appspot.com/o/Manual%2Fmanual.pdf?alt=media&token=c7da9e9e-4184-43ff-a80f-87a49736b9e9" target="blank">
-                <button color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Manuais</p>
-                </button></a>
-              </ion-col>
-            </ion-row>
-
-            <!-- Executar na WEB -->
-            <ion-row justify-content-end showWhen="landscape">
+            <!-- Regulamento e Manual-->
+            <ion-row justify-content-end>
               <ion-col col-lg-1>
-                <ion-item button (click)="openPDF('Regulamento')" color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Regulamento</p>
-                </ion-item>
+                <button color=".corDoc" text-center (click)="openPDF('Regulamento')">
+                  <img src="../assets/pdf.ico" class="tamIconDoc"/><p class="textFile">Regulamento</p>
+                </button>
               </ion-col>
               <ion-col col-lg-1>
-               <ion-item button (click)="openPDF('Manual')" color=".corDoc" text-center>
-                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/><p class="textFile">Manual</p>
-               </ion-item>
+               <button color=".corDoc" text-center (click)="openPDF('Manual')" >
+                  <img src="../assets/pdf.ico" class="tamIconDoc"/>
+                  <p class="textFile">Manual</p>
+               </button>
               </ion-col>
             </ion-row>
 

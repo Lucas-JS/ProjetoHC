@@ -1,5 +1,5 @@
 import { FirebaseProvider } from './../../providers/firebase/firebase';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams,/*, MenuController */
 ToastController,Platform} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -19,9 +19,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class ProfessorPage {
   professor: Observable<any>;
-  aluno: Observable<any>;
+  aluno: any;
   selectCurso: any;
-  curso: any;
+
   certificado: any;
   html: any;
   certVal: any;
@@ -34,7 +34,18 @@ export class ProfessorPage {
   selectCor:boolean;
   teste: Observable<any>;
 
+  opcao:any;
+  subOpcao:any;
+  curso:any;
+  semestre:any;
+  ra:any;
+  nome:any;
 
+  campus:string;
+  sem:string;
+  campusSemCur:string;
+
+  filtro:any;
 
   constructor(
     //public menuctrl: MenuController,
@@ -42,6 +53,8 @@ export class ProfessorPage {
   ) {
     //Captura os dados do login para manipular no FormProfessor
     this.professor = navParams.get('ColProfessor');
+    //Inicializa Variável Curso
+    this.opcao="";
   }
 
   //Muda cor para cor padrão
@@ -50,16 +63,31 @@ export class ProfessorPage {
     return this.cor = "anhembiColor";
   }
 
-  //Busca curso no banco
-  buscaAlunoCurso(){
-    this.aluno = this.firebaseService.getAlunoCurso(this.curso);
+  //Verifica Busca
+  isEmpty(busca) {
+    //Busca Semestre
+    if(busca=="") this.aluno = this.firebaseService.getAlunoRA(this.ra);
+  }
+
+  //Busca curso ou semestre no banco
+  buscaAluno(){
+    //Atribui opção para as buscas
+    this.nome = this.opcao;
+    this.ra=this.opcao;
+    //Busca Curso
+    this.aluno = this.firebaseService.getAlunoNome(this.nome);
+    //Chama função para verificar se encontrou objeto
+    this.aluno.subscribe(a=>{let busca=a;return this.isEmpty(busca)});
     this.certVal = "";
     this.certificado = "";
   }
 
-  //Verifica opção do curso
-  optCurso(optCurso:string):void{
-   this.curso = optCurso;
+  //Filtro Semestre e Campus
+  filtroAluno(){
+    //Concatena Valores
+    this.campusSemCur=this.campus+this.sem+this.curso;
+    console.log(this.campusSemCur);
+    this.aluno = this.firebaseService.getCampusSem(this.campusSemCur);
   }
 
   // busca somente o certificado expecífico

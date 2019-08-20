@@ -5,6 +5,9 @@
   background-color:	#F8F8F8;
   border-radius: 10px;
   opacity: 0.9;
+  width:96%;
+  position:absolute;
+  left:2%;
   }
 
   /*Plano de Fundo*/
@@ -54,8 +57,8 @@
 
   /*Cor de fundo dos documentos*/
   .corDoc{
-  background-color:	#f4f4f4;
-  opacity:0.9;
+    padding-top: 1%;
+    opacity:0.7;
   }
 
   /*Cor do formulário do login*/
@@ -88,6 +91,12 @@
     font-size:14px;
     font-weight: bold;
   }
+
+  //Texto Filtro
+    p.textFiltro{
+      font-size:10px;
+      font-weight: bold;
+    }
 
   //Titulo Web
   p.textTitle{
@@ -198,13 +207,13 @@
   }
 
   /*Estilização do icone do PDF*/
-  .tamIconPDF{
-    width:10%;
-    height:2%;
+  .tamIconPDFMobile{
+    width: 10%;
+    height:5%;
   }
 
-  /*Estilização do icone do PDF*/
-  .tamIconPDFMobile{
+   /*Estilização do icone do PDF*/
+   .tamIconDoc{
     width: 25%;
     height:5%;
   }
@@ -235,8 +244,18 @@
      border: solid 1px #01AB8E;
   }
 
+  .select{
+    max-width: 100% !important;
+    color:#01AB8E;
+  }
+
   /*ícones*/
   .ion-md-checkmark-circle{
+    color: #01AB8E !important;
+    font-size:1.5em;
+  }
+
+  .ion-md-shuffle{
     color: #01AB8E !important;
     font-size:1.5em;
   }
@@ -261,3 +280,5 @@
     color: red !important;
     font-size:1.5em;
   }
+
+

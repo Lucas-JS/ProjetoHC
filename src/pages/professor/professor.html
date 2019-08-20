@@ -10,7 +10,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="planFundo">
+<ion-content class="planFundo">
+  <br>
   <ion-grid>
     <div class="info">
       <ion-grid>
@@ -24,16 +25,42 @@
           </ion-col>
         </ion-row>
 
-        <ion-row justify-content-end>
-          <ion-col col-xl-3 col-sm-12>
-            <ion-item>
-              <ion-select (ionChange)="buscaAlunoCurso()" placeholder="Curso:" okText="Buscar" class="inputCurso">
-                <ion-option (ionSelect)="optCurso('CCO')">Ciências da Computação</ion-option>
-                <ion-option (ionSelect)="optCurso('SI')">Sistemas da Informação</ion-option>
+        <ion-row justify-content-between>
+         <ion-col col-xl-3 col-12>
+          <ion-row>
+           <ion-item class="select">
+              <ion-select [(ngModel)]="campus" (ionChange)="filtroAluno()" interface="popover" placeholder="Campus">
+                <ion-option value="P1">Paulista 1</ion-option>
+                <ion-option value="P2">Paulista 2</ion-option>
+                <ion-option value="Mooca">Mooca</ion-option>
+                <ion-option value="VO">Vila-Olimpia</ion-option>
+                <ion-option value="Morumbi">Morumbi</ion-option>
               </ion-select>
-            </ion-item>
-          </ion-col>
+
+              <ion-select [(ngModel)]="sem" (ionChange)="filtroAluno()" interface="popover" placeholder="Semestre">
+                  <ion-option value="1">1º Semestre</ion-option>
+                  <ion-option value="2">2º Semestre</ion-option>
+                  <ion-option value="3">3º Semestre</ion-option>
+                  <ion-option value="4">4º Semestre</ion-option>
+                  <ion-option value="5">5º Semestre</ion-option>
+                  <ion-option value="6">6º Semestre</ion-option>
+                  <ion-option value="7">7º Semestre</ion-option>
+                  <ion-option value="8">8º Semestre</ion-option>
+              </ion-select>
+
+              <ion-select [(ngModel)]="curso" (ionChange)="filtroAluno()" interface="popover" placeholder="Curso">
+                  <ion-option value="CCO">Ciências da Computação</ion-option>
+                  <ion-option value="SI">Sistemas da Informação</ion-option>
+              </ion-select>
+           </ion-item>
+          </ion-row>
+         </ion-col>
+
+         <ion-col col-xl-3 col-12>
+          <ion-searchbar [(ngModel)]="opcao" (ionInput)="buscaAluno()" placeholder="RA ou Nome:" class="inputCurso"></ion-searchbar>
+         </ion-col>
         </ion-row>
+
 
         <ion-row>
             <!-- DIV ALUNOS -->
@@ -49,10 +76,10 @@
               </ion-row>
 
               <ion-list radio-group>
-                  <ion-item *ngFor="let alunos of aluno | async">
-                      <ion-radio (ionSelect)="mudaCor()" [color]="cor" (click)="getCertificado(alunos.ra)"></ion-radio>
-                      <ion-label><p class="textWeb">{{alunos.ra}} - {{alunos.nome}}</p></ion-label>
-                  </ion-item>
+                <ion-item *ngFor="let alunos of aluno|async">
+                    <ion-radio (ionSelect)="mudaCor()" [color]="cor" (click)="getCertificado(alunos.ra)"></ion-radio>
+                    <ion-label><p class="textWeb">{{alunos.ra}} - {{alunos.nome}}</p></ion-label>
+                </ion-item>
               </ion-list>
             </ion-col>
 
@@ -68,6 +95,7 @@
 
 
           <!--LISTAGEM DOS CERTIFICADOS-->
+          <ion-scroll scrollY="true" style="height:78%">
           <ion-list radio-group>
               <ion-item *ngFor="let certificados of certificado | async">
                 <ion-radio (ionSelect)="mudaCor()" [color]="cor" (click)="buscaCertificadoExp(certificados.key)"></ion-radio>
@@ -91,6 +119,7 @@
                 </ion-label>
               </ion-item>
            </ion-list>
+           </ion-scroll>
           </ion-col>
 
 
@@ -131,14 +160,9 @@
 
                           <!-- PDF e Data -->
                           <ion-col col-12>
-                            <ion-row justify-content-initial>
-                              <!-- Versão Web -->
-                              <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
-                              <!-- Versão Mobile -->
-                                <a href="{{certificado.url}}" target="blank">
-                                  <button color=".corDoc" text-center showWhen="android,ios">
-                                  <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
-                                </button></a>
+                            <ion-row justify-content-center>
+                              <img src="../assets/pdf.ico" (click)="openPDF(certificado.url)"class="tamIconPDFMobile"/>
+
                               <p class="textWeb" text-wrap>&nbsp; Data de Envio: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                             </ion-row>
 
@@ -155,15 +179,12 @@
                             <ion-col>
                               <ion-item>
                                 <ion-row justify-content-center>
-                                  <!-- Versão Web -->
-                                  <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
-                                    <!-- Versão Mobile -->
-                                    <a href="{{certificado.url}}" target="blank">
-                                      <button color=".corDoc" text-center showWhen="android,ios">
-                                        <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
-                                      </button></a>
+
+                                  <img src="../assets/pdf.ico" (click)="openPDF(certificado.url)"class="tamIconPDFMobile"/>
+
                                   <p class="textWeb" showWhen="landscape">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                                   <p class="textMobile" showWhen="android,ios">&nbsp;Data de Aprovação: {{certificado.data| date:'dd/MM/yyyy'}}</p>
+
                               </ion-row>
                               </ion-item>
                             </ion-col>
@@ -174,13 +195,9 @@
                             <ion-col>
                                 <ion-item>
                                   <ion-row justify-content-center>
-                                    <!-- Versão Web -->
-                                    <img src="../assets/pdf.ico" class="tamIconPDF" (click)="openPDF(certificado.url)" showWhen="landscape"/>
-                                    <!-- Versão Mobile -->
-                                    <a href="{{certificado.url}}" target="blank">
-                                      <button color=".corDoc" text-center showWhen="android,ios">
-                                        <img src="../assets/pdf.ico" class="tamIconPDFMobile"/>
-                                      </button></a>
+
+                                    <img src="../assets/pdf.ico" (click)="openPDF(certificado.url)"class="tamIconPDFMobile"/>
+
                                     <p class="textWeb" showWhen="landscape">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy HH:mm:ss'}}</p>
                                     <p class="textMobile" showWhen="android,ios">&nbsp;Data de Reprovação: {{certificado.data| date:'dd/MM/yyyy'}}</p>
                                 </ion-row>

@@ -9,9 +9,6 @@ import { File } from '@ionic-native/file';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { LoginPage } from '../login/login';
 import { AlunoPage } from '../aluno/aluno';
-import moment from 'moment';
-
-
 @IonicPage()
 @Component({
   selector: 'page-grupo',
@@ -184,7 +181,7 @@ export class GrupoPage {
   }
 
   limitador(ch){
-    if(ch>=0){
+    if(ch>0){
       return false;
     }else{return true};
   }
