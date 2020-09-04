@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
